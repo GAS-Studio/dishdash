@@ -1,5 +1,11 @@
 import { create } from 'zustand';
 
+export type Ingredient = {
+  name: string;
+  quantity: string;
+  unit: string;
+};
+
 export type Recipe = {
   id: string;
   name: string;
@@ -10,13 +16,15 @@ export type Recipe = {
   servings: number;
   difficulty: string;
   chefInspiration: string;
-  ingredients: string[];
+  description?: string;
+  ingredients: Ingredient[];
   steps: string[];
   macros: {
     calories: number;
     protein: number;
     carbs: number;
-    fat: number;
+    fats: number;
+    fibre: number;
   };
   imageUrl: string;
 };
