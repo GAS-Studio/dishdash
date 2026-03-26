@@ -8,7 +8,6 @@ import {
   StyleSheet,
   SafeAreaView,
   Platform,
-  Alert,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -52,14 +51,7 @@ export default function RecipeDetailScreen() {
     } else {
       setDinner(recipe);
     }
-    Alert.alert(
-      `Added to ${mealSlot}! 🎉`,
-      recipe.name,
-      [
-        { text: "View Today's Plan", onPress: () => router.push('/(tabs)/plan') },
-        { text: 'Keep Browsing', style: 'cancel', onPress: () => router.back() },
-      ]
-    );
+    router.replace('/(tabs)/plan');
   };
 
   return (
