@@ -1,0 +1,47 @@
+[
+  {
+    "id": "b001",
+    "name": "Sev Khamani",
+    "mealType": "breakfast",
+    "cuisineTag": ["gujarati", "indian"],
+    "prepTime": 10,
+    "cookTime": 20,
+    "servings": 4,
+    "difficulty": "medium",
+    "chefInspiration": "A Gujarati classic — light, tangy, and packed with flavour.",
+    "ingredients": ["1 cup chana dal", "1 tsp ginger paste", "1 tsp green chilli paste", "salt to taste", "1 tsp sugar", "1 tbsp lemon juice", "1 tsp Eno/baking soda", "sev for topping", "coriander for garnish"],
+    "steps": ["Soak chana dal for 2 hrs and grind to paste.", "Mix in ginger, chilli, salt, sugar, lemon juice.", "Add Eno and steam for 15 min.", "Top with sev and coriander."],
+    "macros": { "calories": 220, "protein": 10, "carbs": 32, "fat": 5 },
+    "imageUrl": "assets/recipes/b001_sev_khamani.jpg"
+  },
+  {
+    "id": "b002",
+    "name": "Poha",
+    "mealType": "breakfast",
+    "cuisineTag": ["maharashtrian", "indian"],
+    "prepTime": 5,
+    "cookTime": 10,
+    "servings": 2,
+    "difficulty": "easy",
+    "chefInspiration": "Quick, humble, and deeply comforting.",
+    "ingredients": ["2 cups flattened rice (poha)", "1 onion chopped", "1 tsp mustard seeds", "curry leaves", "green chilli", "turmeric", "salt", "lemon juice", "coriander"],
+    "steps": ["Rinse poha, drain well.", "Temper mustard seeds, curry leaves, chilli.", "Add onion, sauté.", "Add poha, turmeric, salt. Mix.", "Finish with lemon and coriander."],
+    "macros": { "calories": 180, "protein": 4, "carbs": 38, "fat": 3 },
+    "imageUrl": "assets/recipes/b002_poha.jpg"
+  },
+  {
+    "id": "b003",
+    "name": "Masala Omelette",
+    "mealType": "breakfast",
+    "cuisineTag": ["pan-indian"],
+    "prepTime": 5,
+    "cookTime": 5,
+    "servings": 1,
+    "difficulty": "easy",
+    "chefInspiration": "Street-style omelette — spicy, crispy edges, irresistible.",
+    "ingredients": ["2 eggs", "1 small onion chopped", "1 tomato chopped", "green chilli", "coriander", "salt", "pepper", "oil"],
+    "steps": ["Beat eggs with all veggies and spices.", "Heat oil in pan.", "Pour mix and cook on medium.", "Fold and serve hot."],
+    "macros": { "calories": 210, "protein": 14, "carbs": 6, "fat": 14 },
+    "imageUrl": "assets/recipes/b003_masala_omelette.jpg"
+  }
+]
