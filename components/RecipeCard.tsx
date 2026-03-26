@@ -6,15 +6,18 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { Recipe } from '../store/useMealStore';
 import recipeImages from '../constants/images';
 import { colors, radius } from '../constants/theme';
 
-const { width: SW, height: SH } = Dimensions.get('window');
-export const CARD_WIDTH = SW - 32;
-export const CARD_HEIGHT = SH * 0.70;
-const IMAGE_HEIGHT = CARD_HEIGHT * 0.54;
+const { width: RAW_W, height: RAW_H } = Dimensions.get('window');
+const SW = Platform.OS === 'web' ? Math.min(RAW_W, 390) : RAW_W;
+const SH = Platform.OS === 'web' ? Math.min(RAW_H, 844) : RAW_H;
+export const CARD_WIDTH = SW - 40;
+export const CARD_HEIGHT = SH * 0.75;
+const IMAGE_HEIGHT = CARD_HEIGHT * 0.48;
 
 type Props = {
   recipe: Recipe;
@@ -73,11 +76,13 @@ export default function RecipeCard({ recipe, onSelect, onSkip }: Props) {
           )}
         </View>
 
-        {/* Macros grid */}
+        {/* Macros */}
         <View style={styles.macrosRow}>
-          <MacroBox label="Calories" value={String(recipe.macros.calories)} />
-          <MacroBox label="Protein"  value={`${recipe.macros.protein}g`} />
-          <MacroBox label="Carbs"    value={`${recipe.macros.carbs}g`} />
+          <MacroBox label="Cal" value={String(recipe.macros.calories)} color={colors.primary} />
+          <MacroBox label="Protein"  value={`${recipe.macros.protein}g`} color="#8A9A5B" />
+          <MacroBox label="Carbs"    value={`${recipe.macros.carbs}g`} color="#F4C430" />
+          <MacroBox label="Fats"     value={`${recipe.macros.fats}g`} color="#E2725B" />
+          <MacroBox label="Fibre"    value={`${recipe.macros.fibre}g`} color="#956E60" />
         </View>
 
         {/* Skip / Select buttons */}
@@ -109,11 +114,12 @@ export default function RecipeCard({ recipe, onSelect, onSkip }: Props) {
   );
 }
 
-function MacroBox({ label, value }: { label: string; value: string }) {
+function MacroBox({ label, value, color }: { label: string; value: string; color: string }) {
   return (
     <View style={styles.macroBox}>
-      <Text style={styles.macroLabel}>{label.toUpperCase()}</Text>
+      <View style={[styles.macroDot, { backgroundColor: color }]} />
       <Text style={styles.macroValue}>{value}</Text>
+      <Text style={styles.macroLabel}>{label}</Text>
     </View>
   );
 }
@@ -250,26 +256,32 @@ const styles = StyleSheet.create({
   // ── Macros ──
   macrosRow: {
     flexDirection: 'row',
-    gap: 8,
+    justifyContent: 'space-between',
+    backgroundColor: colors.surfaceContainerLow,
+    borderRadius: radius.md,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
   },
   macroBox: {
     flex: 1,
-    backgroundColor: colors.surfaceContainerLow,
-    borderRadius: radius.sm,
-    paddingVertical: 9,
     alignItems: 'center',
+    gap: 2,
+  },
+  macroDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+  },
+  macroValue: {
+    fontSize: 15,
+    fontWeight: '800',
+    color: colors.onSurface,
   },
   macroLabel: {
     fontSize: 9,
-    fontWeight: '700',
+    fontWeight: '600',
     color: colors.onSurfaceVariant,
-    letterSpacing: 0.4,
-  },
-  macroValue: {
-    fontSize: 17,
-    fontWeight: '800',
-    color: colors.onSurface,
-    marginTop: 2,
+    letterSpacing: 0.3,
   },
 
   // ── Action buttons ──

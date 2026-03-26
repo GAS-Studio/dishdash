@@ -3,7 +3,10 @@
     "id": "b001",
     "name": "Sev Khamani",
     "mealType": "breakfast",
-    "cuisineTag": ["Gujarati", "Indian"],
+    "cuisineTag": [
+      "Gujarati",
+      "Indian"
+    ],
     "prepTime": 15,
     "cookTime": 20,
     "servings": 4,
@@ -11,19 +14,71 @@
     "chefInspiration": "Ranveer Brar",
     "description": "A crumbly, tangy Gujarati snack made from cooked chana dal, tempered with mustard seeds and topped with sev.",
     "ingredients": [
-      { "name": "chana dal (soaked 2 hrs)", "quantity": "1", "unit": "cup" },
-      { "name": "green chilli", "quantity": "2", "unit": "piece" },
-      { "name": "ginger", "quantity": "1", "unit": "inch" },
-      { "name": "lemon juice", "quantity": "2", "unit": "tbsp" },
-      { "name": "sugar", "quantity": "1", "unit": "tsp" },
-      { "name": "turmeric", "quantity": "0.5", "unit": "tsp" },
-      { "name": "mustard seeds", "quantity": "1", "unit": "tsp" },
-      { "name": "curry leaves", "quantity": "8", "unit": "piece" },
-      { "name": "oil", "quantity": "2", "unit": "tbsp" },
-      { "name": "sev", "quantity": "0.5", "unit": "cup" },
-      { "name": "pomegranate seeds", "quantity": "2", "unit": "tbsp" },
-      { "name": "fresh coriander", "quantity": "2", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "chana dal (soaked 2 hrs)",
+        "quantity": "1",
+        "unit": "cup"
+      },
+      {
+        "name": "green chilli",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "ginger",
+        "quantity": "1",
+        "unit": "inch"
+      },
+      {
+        "name": "lemon juice",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "sugar",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "turmeric",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "mustard seeds",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "curry leaves",
+        "quantity": "8",
+        "unit": "piece"
+      },
+      {
+        "name": "oil",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "sev",
+        "quantity": "0.5",
+        "unit": "cup"
+      },
+      {
+        "name": "pomegranate seeds",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "fresh coriander",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Grind soaked chana dal with green chilli and ginger into a coarse paste without water.",
@@ -32,14 +87,23 @@
       "Mix in lemon juice, sugar, and salt. Toss well.",
       "Top with sev, pomegranate seeds, and fresh coriander. Serve immediately."
     ],
-    "macros": { "calories": 210, "protein": 10, "carbs": 28, "fats": 7, "fibre": 6 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 210,
+      "protein": 10,
+      "carbs": 28,
+      "fats": 7,
+      "fibre": 6
+    },
+    "imageUrl": "assets/recipes/b001.png"
   },
   {
     "id": "b002",
     "name": "Idli Vada Sambhar",
     "mealType": "breakfast",
-    "cuisineTag": ["South Indian", "Indian"],
+    "cuisineTag": [
+      "South Indian",
+      "Indian"
+    ],
     "prepTime": 30,
     "cookTime": 25,
     "servings": 4,
@@ -47,18 +111,66 @@
     "chefInspiration": "Sanjyot Keer",
     "description": "Fluffy steamed idlis and crispy medu vadas served with a robust toor dal sambhar and fresh coconut chutney.",
     "ingredients": [
-      { "name": "idli batter (ready)", "quantity": "2", "unit": "cup" },
-      { "name": "urad dal (soaked)", "quantity": "1", "unit": "cup" },
-      { "name": "toor dal", "quantity": "0.5", "unit": "cup" },
-      { "name": "tamarind", "quantity": "1", "unit": "tbsp" },
-      { "name": "tomato", "quantity": "2", "unit": "piece" },
-      { "name": "onion", "quantity": "1", "unit": "piece" },
-      { "name": "sambhar powder", "quantity": "2", "unit": "tbsp" },
-      { "name": "mustard seeds", "quantity": "1", "unit": "tsp" },
-      { "name": "dry red chilli", "quantity": "2", "unit": "piece" },
-      { "name": "curry leaves", "quantity": "10", "unit": "piece" },
-      { "name": "oil for frying", "quantity": "2", "unit": "cup" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "idli batter (ready)",
+        "quantity": "2",
+        "unit": "cup"
+      },
+      {
+        "name": "urad dal (soaked)",
+        "quantity": "1",
+        "unit": "cup"
+      },
+      {
+        "name": "toor dal",
+        "quantity": "0.5",
+        "unit": "cup"
+      },
+      {
+        "name": "tamarind",
+        "quantity": "1",
+        "unit": "tbsp"
+      },
+      {
+        "name": "tomato",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "onion",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "sambhar powder",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "mustard seeds",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "dry red chilli",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "curry leaves",
+        "quantity": "10",
+        "unit": "piece"
+      },
+      {
+        "name": "oil for frying",
+        "quantity": "2",
+        "unit": "cup"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Pour idli batter into greased moulds and steam for 10–12 minutes. Rest for 2 minutes before unmoulding.",
@@ -67,14 +179,24 @@
       "In a pan, temper mustard seeds, red chilli, and curry leaves. Add onion, sambhar powder, tamarind water, and cooked dal. Simmer 10 minutes.",
       "Serve hot idlis and vadas with sambhar and coconut chutney on the side."
     ],
-    "macros": { "calories": 320, "protein": 12, "carbs": 48, "fats": 9, "fibre": 7 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 320,
+      "protein": 12,
+      "carbs": 48,
+      "fats": 9,
+      "fibre": 7
+    },
+    "imageUrl": "assets/recipes/b002.png"
   },
   {
     "id": "b003",
     "name": "Ragi Dhokla",
     "mealType": "breakfast",
-    "cuisineTag": ["Gujarati", "Healthy", "Indian"],
+    "cuisineTag": [
+      "Gujarati",
+      "Healthy",
+      "Indian"
+    ],
     "prepTime": 10,
     "cookTime": 20,
     "servings": 4,
@@ -82,18 +204,66 @@
     "chefInspiration": "Kunal Kapur",
     "description": "A nutritious twist on classic dhokla using ragi (finger millet) flour, lightly spiced and steamed to a spongy finish.",
     "ingredients": [
-      { "name": "ragi flour", "quantity": "1", "unit": "cup" },
-      { "name": "besan", "quantity": "0.5", "unit": "cup" },
-      { "name": "yoghurt", "quantity": "0.5", "unit": "cup" },
-      { "name": "green chilli paste", "quantity": "1", "unit": "tsp" },
-      { "name": "ginger paste", "quantity": "1", "unit": "tsp" },
-      { "name": "eno fruit salt", "quantity": "1", "unit": "tsp" },
-      { "name": "lemon juice", "quantity": "1", "unit": "tbsp" },
-      { "name": "mustard seeds", "quantity": "1", "unit": "tsp" },
-      { "name": "sesame seeds", "quantity": "1", "unit": "tsp" },
-      { "name": "curry leaves", "quantity": "8", "unit": "piece" },
-      { "name": "oil", "quantity": "2", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "ragi flour",
+        "quantity": "1",
+        "unit": "cup"
+      },
+      {
+        "name": "besan",
+        "quantity": "0.5",
+        "unit": "cup"
+      },
+      {
+        "name": "yoghurt",
+        "quantity": "0.5",
+        "unit": "cup"
+      },
+      {
+        "name": "green chilli paste",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "ginger paste",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "eno fruit salt",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "lemon juice",
+        "quantity": "1",
+        "unit": "tbsp"
+      },
+      {
+        "name": "mustard seeds",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "sesame seeds",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "curry leaves",
+        "quantity": "8",
+        "unit": "piece"
+      },
+      {
+        "name": "oil",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Mix ragi flour, besan, yoghurt, green chilli paste, ginger paste, salt, and lemon juice into a smooth batter. Rest 5 minutes.",
@@ -102,14 +272,23 @@
       "Heat oil, splutter mustard seeds, sesame seeds, and curry leaves. Pour over dhokla.",
       "Serve warm with green chutney."
     ],
-    "macros": { "calories": 185, "protein": 8, "carbs": 30, "fats": 5, "fibre": 5 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 185,
+      "protein": 8,
+      "carbs": 30,
+      "fats": 5,
+      "fibre": 5
+    },
+    "imageUrl": "assets/recipes/b003.png"
   },
   {
     "id": "b004",
     "name": "Poha",
     "mealType": "breakfast",
-    "cuisineTag": ["Maharashtrian", "Indian"],
+    "cuisineTag": [
+      "Maharashtrian",
+      "Indian"
+    ],
     "prepTime": 5,
     "cookTime": 15,
     "servings": 3,
@@ -117,19 +296,71 @@
     "chefInspiration": "Sanjyot Keer",
     "description": "Light, fluffy flattened rice tempered with mustard seeds, curry leaves, onion and peas — a classic Maharashtrian breakfast.",
     "ingredients": [
-      { "name": "thick poha (flattened rice)", "quantity": "2", "unit": "cup" },
-      { "name": "onion, finely chopped", "quantity": "1", "unit": "piece" },
-      { "name": "green chilli, slit", "quantity": "2", "unit": "piece" },
-      { "name": "green peas", "quantity": "0.25", "unit": "cup" },
-      { "name": "mustard seeds", "quantity": "1", "unit": "tsp" },
-      { "name": "curry leaves", "quantity": "10", "unit": "piece" },
-      { "name": "turmeric", "quantity": "0.5", "unit": "tsp" },
-      { "name": "sugar", "quantity": "0.5", "unit": "tsp" },
-      { "name": "lemon juice", "quantity": "1", "unit": "tbsp" },
-      { "name": "oil", "quantity": "2", "unit": "tbsp" },
-      { "name": "fresh coriander", "quantity": "2", "unit": "tbsp" },
-      { "name": "sev (optional)", "quantity": "2", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "thick poha (flattened rice)",
+        "quantity": "2",
+        "unit": "cup"
+      },
+      {
+        "name": "onion, finely chopped",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "green chilli, slit",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "green peas",
+        "quantity": "0.25",
+        "unit": "cup"
+      },
+      {
+        "name": "mustard seeds",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "curry leaves",
+        "quantity": "10",
+        "unit": "piece"
+      },
+      {
+        "name": "turmeric",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "sugar",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "lemon juice",
+        "quantity": "1",
+        "unit": "tbsp"
+      },
+      {
+        "name": "oil",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "fresh coriander",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "sev (optional)",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Rinse poha in a colander under running water until soft. Drain and season with turmeric, sugar, and salt. Set aside.",
@@ -138,14 +369,23 @@
       "Add poha and toss gently on low heat for 3–4 minutes.",
       "Finish with lemon juice, fresh coriander, and a handful of sev. Serve hot."
     ],
-    "macros": { "calories": 240, "protein": 5, "carbs": 42, "fats": 6, "fibre": 3 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 240,
+      "protein": 5,
+      "carbs": 42,
+      "fats": 6,
+      "fibre": 3
+    },
+    "imageUrl": "assets/recipes/b004.png"
   },
   {
     "id": "b005",
     "name": "Upma",
     "mealType": "breakfast",
-    "cuisineTag": ["South Indian", "Indian"],
+    "cuisineTag": [
+      "South Indian",
+      "Indian"
+    ],
     "prepTime": 5,
     "cookTime": 20,
     "servings": 3,
@@ -153,19 +393,71 @@
     "chefInspiration": "Ranveer Brar",
     "description": "Savoury roasted semolina cooked with vegetables and tempered with mustard seeds, curry leaves and green chilli.",
     "ingredients": [
-      { "name": "coarse semolina (suji)", "quantity": "1", "unit": "cup" },
-      { "name": "onion, chopped", "quantity": "1", "unit": "piece" },
-      { "name": "green chilli, slit", "quantity": "2", "unit": "piece" },
-      { "name": "carrot, finely diced", "quantity": "0.25", "unit": "cup" },
-      { "name": "green peas", "quantity": "0.25", "unit": "cup" },
-      { "name": "mustard seeds", "quantity": "1", "unit": "tsp" },
-      { "name": "chana dal", "quantity": "1", "unit": "tsp" },
-      { "name": "urad dal", "quantity": "1", "unit": "tsp" },
-      { "name": "curry leaves", "quantity": "10", "unit": "piece" },
-      { "name": "ginger, grated", "quantity": "0.5", "unit": "inch" },
-      { "name": "water", "quantity": "2.5", "unit": "cup" },
-      { "name": "ghee", "quantity": "2", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "coarse semolina (suji)",
+        "quantity": "1",
+        "unit": "cup"
+      },
+      {
+        "name": "onion, chopped",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "green chilli, slit",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "carrot, finely diced",
+        "quantity": "0.25",
+        "unit": "cup"
+      },
+      {
+        "name": "green peas",
+        "quantity": "0.25",
+        "unit": "cup"
+      },
+      {
+        "name": "mustard seeds",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "chana dal",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "urad dal",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "curry leaves",
+        "quantity": "10",
+        "unit": "piece"
+      },
+      {
+        "name": "ginger, grated",
+        "quantity": "0.5",
+        "unit": "inch"
+      },
+      {
+        "name": "water",
+        "quantity": "2.5",
+        "unit": "cup"
+      },
+      {
+        "name": "ghee",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Dry roast semolina on medium heat until fragrant and lightly golden. Set aside.",
@@ -174,14 +466,24 @@
       "Pour in water, bring to a boil, and season with salt.",
       "Add roasted semolina in a steady stream, stirring constantly. Cover and cook on low for 5 minutes. Fluff and serve."
     ],
-    "macros": { "calories": 260, "protein": 7, "carbs": 40, "fats": 8, "fibre": 4 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 260,
+      "protein": 7,
+      "carbs": 40,
+      "fats": 8,
+      "fibre": 4
+    },
+    "imageUrl": "assets/recipes/b005.png"
   },
   {
     "id": "b006",
     "name": "Adai",
     "mealType": "breakfast",
-    "cuisineTag": ["South Indian", "Indian", "High Protein"],
+    "cuisineTag": [
+      "South Indian",
+      "Indian",
+      "High Protein"
+    ],
     "prepTime": 20,
     "cookTime": 20,
     "servings": 4,
@@ -189,17 +491,61 @@
     "chefInspiration": "Sanjyot Keer",
     "description": "Thick, protein-rich lentil and rice crepes from Tamil Nadu, spiced with dry red chillies and curry leaves.",
     "ingredients": [
-      { "name": "raw rice", "quantity": "0.5", "unit": "cup" },
-      { "name": "toor dal", "quantity": "0.25", "unit": "cup" },
-      { "name": "chana dal", "quantity": "0.25", "unit": "cup" },
-      { "name": "urad dal", "quantity": "0.25", "unit": "cup" },
-      { "name": "dry red chilli", "quantity": "4", "unit": "piece" },
-      { "name": "curry leaves", "quantity": "12", "unit": "piece" },
-      { "name": "onion, finely chopped", "quantity": "1", "unit": "piece" },
-      { "name": "ginger", "quantity": "1", "unit": "inch" },
-      { "name": "asafoetida", "quantity": "a pinch", "unit": "" },
-      { "name": "oil", "quantity": "2", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "raw rice",
+        "quantity": "0.5",
+        "unit": "cup"
+      },
+      {
+        "name": "toor dal",
+        "quantity": "0.25",
+        "unit": "cup"
+      },
+      {
+        "name": "chana dal",
+        "quantity": "0.25",
+        "unit": "cup"
+      },
+      {
+        "name": "urad dal",
+        "quantity": "0.25",
+        "unit": "cup"
+      },
+      {
+        "name": "dry red chilli",
+        "quantity": "4",
+        "unit": "piece"
+      },
+      {
+        "name": "curry leaves",
+        "quantity": "12",
+        "unit": "piece"
+      },
+      {
+        "name": "onion, finely chopped",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "ginger",
+        "quantity": "1",
+        "unit": "inch"
+      },
+      {
+        "name": "asafoetida",
+        "quantity": "a pinch",
+        "unit": ""
+      },
+      {
+        "name": "oil",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Soak rice and all dals together for 3–4 hours.",
@@ -208,14 +554,24 @@
       "Heat a cast iron tawa, pour a ladle of batter and spread into a thick circle. Drizzle oil around edges.",
       "Cook on medium heat until edges crisp. Flip and cook 2 minutes. Serve with avial or coconut chutney."
     ],
-    "macros": { "calories": 290, "protein": 14, "carbs": 44, "fats": 6, "fibre": 8 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 290,
+      "protein": 14,
+      "carbs": 44,
+      "fats": 6,
+      "fibre": 8
+    },
+    "imageUrl": "assets/recipes/b006.png"
   },
   {
     "id": "b007",
     "name": "Pesarattu",
     "mealType": "breakfast",
-    "cuisineTag": ["Andhra", "South Indian", "Indian"],
+    "cuisineTag": [
+      "Andhra",
+      "South Indian",
+      "Indian"
+    ],
     "prepTime": 20,
     "cookTime": 15,
     "servings": 3,
@@ -223,14 +579,46 @@
     "chefInspiration": "Kunal Kapur",
     "description": "Andhra-style whole green moong crepes that are naturally protein-packed, crispy on the edges and served with ginger chutney.",
     "ingredients": [
-      { "name": "whole green moong dal (soaked overnight)", "quantity": "1", "unit": "cup" },
-      { "name": "green chilli", "quantity": "2", "unit": "piece" },
-      { "name": "ginger", "quantity": "1", "unit": "inch" },
-      { "name": "cumin seeds", "quantity": "1", "unit": "tsp" },
-      { "name": "onion, finely chopped", "quantity": "0.5", "unit": "piece" },
-      { "name": "fresh coriander", "quantity": "2", "unit": "tbsp" },
-      { "name": "oil", "quantity": "2", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "whole green moong dal (soaked overnight)",
+        "quantity": "1",
+        "unit": "cup"
+      },
+      {
+        "name": "green chilli",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "ginger",
+        "quantity": "1",
+        "unit": "inch"
+      },
+      {
+        "name": "cumin seeds",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "onion, finely chopped",
+        "quantity": "0.5",
+        "unit": "piece"
+      },
+      {
+        "name": "fresh coriander",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "oil",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Drain soaked moong dal and grind with green chilli, ginger, cumin, and a little water into a smooth batter.",
@@ -239,14 +627,23 @@
       "Cook until edges turn golden and crisp, flip and cook 1 minute.",
       "Serve hot with ginger chutney or upma stuffed inside."
     ],
-    "macros": { "calories": 220, "protein": 13, "carbs": 32, "fats": 5, "fibre": 7 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 220,
+      "protein": 13,
+      "carbs": 32,
+      "fats": 5,
+      "fibre": 7
+    },
+    "imageUrl": "assets/recipes/b007.png"
   },
   {
     "id": "b008",
     "name": "Uttapam",
     "mealType": "breakfast",
-    "cuisineTag": ["South Indian", "Indian"],
+    "cuisineTag": [
+      "South Indian",
+      "Indian"
+    ],
     "prepTime": 10,
     "cookTime": 20,
     "servings": 4,
@@ -254,14 +651,46 @@
     "chefInspiration": "Ranveer Brar",
     "description": "Thick, soft rice and lentil pancakes topped with onion, tomato, green chilli, and coriander — the comfort dosa.",
     "ingredients": [
-      { "name": "dosa batter (fermented)", "quantity": "2", "unit": "cup" },
-      { "name": "onion, finely chopped", "quantity": "1", "unit": "piece" },
-      { "name": "tomato, finely chopped", "quantity": "1", "unit": "piece" },
-      { "name": "green chilli, finely chopped", "quantity": "1", "unit": "piece" },
-      { "name": "fresh coriander", "quantity": "2", "unit": "tbsp" },
-      { "name": "carrot, grated", "quantity": "0.25", "unit": "cup" },
-      { "name": "oil", "quantity": "2", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "dosa batter (fermented)",
+        "quantity": "2",
+        "unit": "cup"
+      },
+      {
+        "name": "onion, finely chopped",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "tomato, finely chopped",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "green chilli, finely chopped",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "fresh coriander",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "carrot, grated",
+        "quantity": "0.25",
+        "unit": "cup"
+      },
+      {
+        "name": "oil",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Season dosa batter lightly with salt if needed.",
@@ -270,14 +699,24 @@
       "Drizzle oil around edges. Cover and cook 3–4 minutes until base is golden.",
       "Flip carefully and cook 2 minutes. Serve with coconut chutney and sambhar."
     ],
-    "macros": { "calories": 210, "protein": 7, "carbs": 36, "fats": 5, "fibre": 3 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 210,
+      "protein": 7,
+      "carbs": 36,
+      "fats": 5,
+      "fibre": 3
+    },
+    "imageUrl": "assets/recipes/b008.png"
   },
   {
     "id": "b009",
     "name": "Paneer Paratha",
     "mealType": "breakfast",
-    "cuisineTag": ["Punjabi", "Indian", "North Indian"],
+    "cuisineTag": [
+      "Punjabi",
+      "Indian",
+      "North Indian"
+    ],
     "prepTime": 20,
     "cookTime": 20,
     "servings": 4,
@@ -285,15 +724,51 @@
     "chefInspiration": "Sanjyot Keer",
     "description": "Flaky whole wheat flatbreads stuffed with spiced crumbled paneer, cooked on a tawa with generous ghee.",
     "ingredients": [
-      { "name": "whole wheat flour", "quantity": "2", "unit": "cup" },
-      { "name": "paneer, crumbled", "quantity": "200", "unit": "g" },
-      { "name": "green chilli, finely chopped", "quantity": "2", "unit": "piece" },
-      { "name": "ginger, grated", "quantity": "0.5", "unit": "inch" },
-      { "name": "cumin seeds", "quantity": "0.5", "unit": "tsp" },
-      { "name": "amchur (dry mango powder)", "quantity": "0.5", "unit": "tsp" },
-      { "name": "fresh coriander", "quantity": "2", "unit": "tbsp" },
-      { "name": "ghee", "quantity": "3", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "whole wheat flour",
+        "quantity": "2",
+        "unit": "cup"
+      },
+      {
+        "name": "paneer, crumbled",
+        "quantity": "200",
+        "unit": "g"
+      },
+      {
+        "name": "green chilli, finely chopped",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "ginger, grated",
+        "quantity": "0.5",
+        "unit": "inch"
+      },
+      {
+        "name": "cumin seeds",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "amchur (dry mango powder)",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "fresh coriander",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "ghee",
+        "quantity": "3",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Knead flour with water and a pinch of salt into a smooth, pliable dough. Rest 15 minutes.",
@@ -302,14 +777,24 @@
       "Cook on a hot tawa with ghee on both sides until golden patches appear.",
       "Serve hot with pickle, yoghurt, and butter."
     ],
-    "macros": { "calories": 380, "protein": 16, "carbs": 44, "fats": 16, "fibre": 5 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 380,
+      "protein": 16,
+      "carbs": 44,
+      "fats": 16,
+      "fibre": 5
+    },
+    "imageUrl": "assets/recipes/b009.png"
   },
   {
     "id": "b010",
     "name": "Bombay Sandwich",
     "mealType": "breakfast",
-    "cuisineTag": ["Street Food", "Indian", "Mumbai"],
+    "cuisineTag": [
+      "Street Food",
+      "Indian",
+      "Mumbai"
+    ],
     "prepTime": 15,
     "cookTime": 10,
     "servings": 2,
@@ -317,16 +802,56 @@
     "chefInspiration": "Ranveer Brar",
     "description": "Mumbai's iconic layered sandwich with green chutney, spiced potato, cucumber, tomato, and beet — toasted crispy.",
     "ingredients": [
-      { "name": "white bread slices", "quantity": "6", "unit": "piece" },
-      { "name": "boiled potato, sliced", "quantity": "2", "unit": "piece" },
-      { "name": "cucumber, sliced", "quantity": "0.5", "unit": "piece" },
-      { "name": "tomato, sliced", "quantity": "1", "unit": "piece" },
-      { "name": "beetroot, sliced thin", "quantity": "4", "unit": "piece" },
-      { "name": "green chutney", "quantity": "4", "unit": "tbsp" },
-      { "name": "butter", "quantity": "2", "unit": "tbsp" },
-      { "name": "sandwich masala", "quantity": "1", "unit": "tsp" },
-      { "name": "cheese slice (optional)", "quantity": "2", "unit": "piece" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "white bread slices",
+        "quantity": "6",
+        "unit": "piece"
+      },
+      {
+        "name": "boiled potato, sliced",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "cucumber, sliced",
+        "quantity": "0.5",
+        "unit": "piece"
+      },
+      {
+        "name": "tomato, sliced",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "beetroot, sliced thin",
+        "quantity": "4",
+        "unit": "piece"
+      },
+      {
+        "name": "green chutney",
+        "quantity": "4",
+        "unit": "tbsp"
+      },
+      {
+        "name": "butter",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "sandwich masala",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "cheese slice (optional)",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Butter all bread slices on one side. Spread green chutney generously on the other side.",
@@ -335,14 +860,23 @@
       "Press in a sandwich toaster or on a tawa with butter until golden and crisp.",
       "Cut into triangles. Serve with extra chutney and tomato ketchup."
     ],
-    "macros": { "calories": 310, "protein": 8, "carbs": 48, "fats": 10, "fibre": 4 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 310,
+      "protein": 8,
+      "carbs": 48,
+      "fats": 10,
+      "fibre": 4
+    },
+    "imageUrl": "assets/recipes/b010.png"
   },
   {
     "id": "b011",
     "name": "Masala Dosa",
     "mealType": "breakfast",
-    "cuisineTag": ["South Indian", "Indian"],
+    "cuisineTag": [
+      "South Indian",
+      "Indian"
+    ],
     "prepTime": 15,
     "cookTime": 20,
     "servings": 4,
@@ -350,16 +884,56 @@
     "chefInspiration": "Sanjyot Keer",
     "description": "Paper-thin crispy rice and lentil crepes filled with spiced potato masala, served with coconut chutney and sambhar.",
     "ingredients": [
-      { "name": "dosa batter (fermented)", "quantity": "2", "unit": "cup" },
-      { "name": "boiled potato, mashed", "quantity": "3", "unit": "piece" },
-      { "name": "onion, sliced", "quantity": "1", "unit": "piece" },
-      { "name": "green chilli", "quantity": "2", "unit": "piece" },
-      { "name": "mustard seeds", "quantity": "1", "unit": "tsp" },
-      { "name": "curry leaves", "quantity": "10", "unit": "piece" },
-      { "name": "turmeric", "quantity": "0.5", "unit": "tsp" },
-      { "name": "urad dal", "quantity": "1", "unit": "tsp" },
-      { "name": "oil", "quantity": "3", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "dosa batter (fermented)",
+        "quantity": "2",
+        "unit": "cup"
+      },
+      {
+        "name": "boiled potato, mashed",
+        "quantity": "3",
+        "unit": "piece"
+      },
+      {
+        "name": "onion, sliced",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "green chilli",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "mustard seeds",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "curry leaves",
+        "quantity": "10",
+        "unit": "piece"
+      },
+      {
+        "name": "turmeric",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "urad dal",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "oil",
+        "quantity": "3",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Prepare potato masala: temper mustard seeds, urad dal, curry leaves. Add onion and green chilli, sauté. Mix in mashed potato with turmeric and salt.",
@@ -368,14 +942,24 @@
       "Drizzle oil around edges. Cook until edges lift and base is golden-crisp.",
       "Place potato filling in the centre, fold dosa over it. Serve with coconut chutney and sambhar."
     ],
-    "macros": { "calories": 295, "protein": 8, "carbs": 50, "fats": 7, "fibre": 4 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 295,
+      "protein": 8,
+      "carbs": 50,
+      "fats": 7,
+      "fibre": 4
+    },
+    "imageUrl": "assets/recipes/b011.png"
   },
   {
     "id": "b012",
     "name": "Appe",
     "mealType": "breakfast",
-    "cuisineTag": ["South Indian", "Indian", "Healthy"],
+    "cuisineTag": [
+      "South Indian",
+      "Indian",
+      "Healthy"
+    ],
     "prepTime": 10,
     "cookTime": 20,
     "servings": 4,
@@ -383,15 +967,51 @@
     "chefInspiration": "Kunal Kapur",
     "description": "Bite-sized, crispy-outside soft-inside dosa batter balls cooked in a paniyaram pan with minimal oil.",
     "ingredients": [
-      { "name": "dosa batter (fermented)", "quantity": "2", "unit": "cup" },
-      { "name": "onion, finely chopped", "quantity": "0.5", "unit": "piece" },
-      { "name": "green chilli, finely chopped", "quantity": "1", "unit": "piece" },
-      { "name": "fresh coriander", "quantity": "2", "unit": "tbsp" },
-      { "name": "mustard seeds", "quantity": "0.5", "unit": "tsp" },
-      { "name": "curry leaves, chopped", "quantity": "6", "unit": "piece" },
-      { "name": "grated carrot", "quantity": "2", "unit": "tbsp" },
-      { "name": "oil", "quantity": "2", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "dosa batter (fermented)",
+        "quantity": "2",
+        "unit": "cup"
+      },
+      {
+        "name": "onion, finely chopped",
+        "quantity": "0.5",
+        "unit": "piece"
+      },
+      {
+        "name": "green chilli, finely chopped",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "fresh coriander",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "mustard seeds",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "curry leaves, chopped",
+        "quantity": "6",
+        "unit": "piece"
+      },
+      {
+        "name": "grated carrot",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "oil",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Mix onion, green chilli, coriander, carrot, and curry leaves into the batter. Adjust salt.",
@@ -400,14 +1020,23 @@
       "Cover and cook on low-medium heat for 3–4 minutes until base is crisp.",
       "Flip each appe with a skewer and cook the other side 2 minutes. Serve with coconut chutney."
     ],
-    "macros": { "calories": 180, "protein": 6, "carbs": 30, "fats": 4, "fibre": 3 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 180,
+      "protein": 6,
+      "carbs": 30,
+      "fats": 4,
+      "fibre": 3
+    },
+    "imageUrl": "assets/recipes/b012.png"
   },
   {
     "id": "b013",
     "name": "Handwa",
     "mealType": "breakfast",
-    "cuisineTag": ["Gujarati", "Indian"],
+    "cuisineTag": [
+      "Gujarati",
+      "Indian"
+    ],
     "prepTime": 20,
     "cookTime": 40,
     "servings": 6,
@@ -415,17 +1044,61 @@
     "chefInspiration": "Ranveer Brar",
     "description": "A savoury Gujarati baked cake made from fermented rice and lentil batter loaded with bottle gourd and sesame seeds.",
     "ingredients": [
-      { "name": "rice and dal handwa flour", "quantity": "2", "unit": "cup" },
-      { "name": "yoghurt", "quantity": "0.5", "unit": "cup" },
-      { "name": "bottle gourd (lauki), grated", "quantity": "1", "unit": "cup" },
-      { "name": "ginger-green chilli paste", "quantity": "1", "unit": "tbsp" },
-      { "name": "turmeric", "quantity": "0.5", "unit": "tsp" },
-      { "name": "red chilli powder", "quantity": "0.5", "unit": "tsp" },
-      { "name": "eno fruit salt", "quantity": "1", "unit": "tsp" },
-      { "name": "sesame seeds", "quantity": "2", "unit": "tbsp" },
-      { "name": "mustard seeds", "quantity": "1", "unit": "tsp" },
-      { "name": "oil", "quantity": "3", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "rice and dal handwa flour",
+        "quantity": "2",
+        "unit": "cup"
+      },
+      {
+        "name": "yoghurt",
+        "quantity": "0.5",
+        "unit": "cup"
+      },
+      {
+        "name": "bottle gourd (lauki), grated",
+        "quantity": "1",
+        "unit": "cup"
+      },
+      {
+        "name": "ginger-green chilli paste",
+        "quantity": "1",
+        "unit": "tbsp"
+      },
+      {
+        "name": "turmeric",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "red chilli powder",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "eno fruit salt",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "sesame seeds",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "mustard seeds",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "oil",
+        "quantity": "3",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Mix handwa flour with yoghurt, grated lauki, ginger-chilli paste, turmeric, red chilli, and salt into a thick batter.",
@@ -434,14 +1107,23 @@
       "Pour batter in. Sprinkle more sesame on top. Cover and cook on low heat 20 minutes.",
       "Flip carefully and cook other side 15 minutes until both sides are golden. Cut into wedges and serve."
     ],
-    "macros": { "calories": 250, "protein": 9, "carbs": 38, "fats": 8, "fibre": 5 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 250,
+      "protein": 9,
+      "carbs": 38,
+      "fats": 8,
+      "fibre": 5
+    },
+    "imageUrl": "assets/recipes/b013.png"
   },
   {
     "id": "b014",
     "name": "Vermicelli Upma",
     "mealType": "breakfast",
-    "cuisineTag": ["South Indian", "Indian"],
+    "cuisineTag": [
+      "South Indian",
+      "Indian"
+    ],
     "prepTime": 5,
     "cookTime": 15,
     "servings": 3,
@@ -449,17 +1131,61 @@
     "chefInspiration": "Sanjyot Keer",
     "description": "Roasted semiya (vermicelli) cooked with vegetables, tempered with mustard and curry leaves into a quick, light breakfast.",
     "ingredients": [
-      { "name": "roasted vermicelli (semiya)", "quantity": "1.5", "unit": "cup" },
-      { "name": "onion, chopped", "quantity": "1", "unit": "piece" },
-      { "name": "green chilli, slit", "quantity": "1", "unit": "piece" },
-      { "name": "carrot, finely diced", "quantity": "0.25", "unit": "cup" },
-      { "name": "green peas", "quantity": "0.25", "unit": "cup" },
-      { "name": "mustard seeds", "quantity": "1", "unit": "tsp" },
-      { "name": "curry leaves", "quantity": "8", "unit": "piece" },
-      { "name": "water", "quantity": "2", "unit": "cup" },
-      { "name": "oil", "quantity": "2", "unit": "tbsp" },
-      { "name": "lemon juice", "quantity": "1", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "roasted vermicelli (semiya)",
+        "quantity": "1.5",
+        "unit": "cup"
+      },
+      {
+        "name": "onion, chopped",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "green chilli, slit",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "carrot, finely diced",
+        "quantity": "0.25",
+        "unit": "cup"
+      },
+      {
+        "name": "green peas",
+        "quantity": "0.25",
+        "unit": "cup"
+      },
+      {
+        "name": "mustard seeds",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "curry leaves",
+        "quantity": "8",
+        "unit": "piece"
+      },
+      {
+        "name": "water",
+        "quantity": "2",
+        "unit": "cup"
+      },
+      {
+        "name": "oil",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "lemon juice",
+        "quantity": "1",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Heat oil, splutter mustard seeds and curry leaves. Add green chilli and onion, sauté until soft.",
@@ -468,14 +1194,23 @@
       "Add vermicelli, stir and cover. Cook on low heat 5–6 minutes until water is absorbed.",
       "Fluff with a fork, add lemon juice, and serve warm."
     ],
-    "macros": { "calories": 220, "protein": 5, "carbs": 38, "fats": 6, "fibre": 3 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 220,
+      "protein": 5,
+      "carbs": 38,
+      "fats": 6,
+      "fibre": 3
+    },
+    "imageUrl": "assets/recipes/b014.png"
   },
   {
     "id": "b015",
     "name": "Avocado Toast",
     "mealType": "breakfast",
-    "cuisineTag": ["Continental", "Healthy"],
+    "cuisineTag": [
+      "Continental",
+      "Healthy"
+    ],
     "prepTime": 10,
     "cookTime": 5,
     "servings": 2,
@@ -483,15 +1218,51 @@
     "chefInspiration": "Kunal Kapur",
     "description": "Creamy spiced avocado on sourdough with a poached egg, chilli flakes, and a squeeze of lime — elevated yet simple.",
     "ingredients": [
-      { "name": "sourdough bread slices", "quantity": "2", "unit": "piece" },
-      { "name": "ripe avocado", "quantity": "1", "unit": "piece" },
-      { "name": "lemon juice", "quantity": "1", "unit": "tbsp" },
-      { "name": "red chilli flakes", "quantity": "0.5", "unit": "tsp" },
-      { "name": "cumin powder", "quantity": "0.25", "unit": "tsp" },
-      { "name": "egg (optional)", "quantity": "1", "unit": "piece" },
-      { "name": "cherry tomatoes, halved", "quantity": "4", "unit": "piece" },
-      { "name": "olive oil", "quantity": "1", "unit": "tbsp" },
-      { "name": "salt and pepper", "quantity": "to taste", "unit": "" }
+      {
+        "name": "sourdough bread slices",
+        "quantity": "2",
+        "unit": "piece"
+      },
+      {
+        "name": "ripe avocado",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "lemon juice",
+        "quantity": "1",
+        "unit": "tbsp"
+      },
+      {
+        "name": "red chilli flakes",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "cumin powder",
+        "quantity": "0.25",
+        "unit": "tsp"
+      },
+      {
+        "name": "egg (optional)",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "cherry tomatoes, halved",
+        "quantity": "4",
+        "unit": "piece"
+      },
+      {
+        "name": "olive oil",
+        "quantity": "1",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt and pepper",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Toast sourdough until golden and crisp.",
@@ -500,14 +1271,24 @@
       "Spread avocado mixture generously on toast.",
       "Top with poached egg, cherry tomatoes, and a drizzle of olive oil."
     ],
-    "macros": { "calories": 310, "protein": 10, "carbs": 28, "fats": 18, "fibre": 7 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 310,
+      "protein": 10,
+      "carbs": 28,
+      "fats": 18,
+      "fibre": 7
+    },
+    "imageUrl": "assets/recipes/b015.png"
   },
   {
     "id": "b016",
     "name": "Besan ka Chilla",
     "mealType": "breakfast",
-    "cuisineTag": ["Indian", "Healthy", "High Protein"],
+    "cuisineTag": [
+      "Indian",
+      "Healthy",
+      "High Protein"
+    ],
     "prepTime": 10,
     "cookTime": 15,
     "servings": 3,
@@ -515,17 +1296,61 @@
     "chefInspiration": "Sanjyot Keer",
     "description": "Crispy chickpea flour pancakes spiced with ajwain and green chilli — high protein, quick, and deeply satisfying.",
     "ingredients": [
-      { "name": "besan (chickpea flour)", "quantity": "1", "unit": "cup" },
-      { "name": "onion, finely chopped", "quantity": "0.5", "unit": "piece" },
-      { "name": "tomato, finely chopped", "quantity": "0.5", "unit": "piece" },
-      { "name": "green chilli, chopped", "quantity": "1", "unit": "piece" },
-      { "name": "fresh coriander", "quantity": "2", "unit": "tbsp" },
-      { "name": "ajwain (carom seeds)", "quantity": "0.5", "unit": "tsp" },
-      { "name": "turmeric", "quantity": "0.25", "unit": "tsp" },
-      { "name": "red chilli powder", "quantity": "0.25", "unit": "tsp" },
-      { "name": "water", "quantity": "0.75", "unit": "cup" },
-      { "name": "oil", "quantity": "2", "unit": "tbsp" },
-      { "name": "salt", "quantity": "to taste", "unit": "" }
+      {
+        "name": "besan (chickpea flour)",
+        "quantity": "1",
+        "unit": "cup"
+      },
+      {
+        "name": "onion, finely chopped",
+        "quantity": "0.5",
+        "unit": "piece"
+      },
+      {
+        "name": "tomato, finely chopped",
+        "quantity": "0.5",
+        "unit": "piece"
+      },
+      {
+        "name": "green chilli, chopped",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "fresh coriander",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "ajwain (carom seeds)",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "turmeric",
+        "quantity": "0.25",
+        "unit": "tsp"
+      },
+      {
+        "name": "red chilli powder",
+        "quantity": "0.25",
+        "unit": "tsp"
+      },
+      {
+        "name": "water",
+        "quantity": "0.75",
+        "unit": "cup"
+      },
+      {
+        "name": "oil",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Whisk besan with water into a smooth, lump-free batter of pouring consistency.",
@@ -534,14 +1359,24 @@
       "Drizzle oil around edges. Cook until edges lift and base is golden.",
       "Flip and cook other side 2 minutes. Serve with green chutney or yoghurt."
     ],
-    "macros": { "calories": 200, "protein": 10, "carbs": 28, "fats": 6, "fibre": 5 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 200,
+      "protein": 10,
+      "carbs": 28,
+      "fats": 6,
+      "fibre": 5
+    },
+    "imageUrl": "assets/recipes/b016.png"
   },
   {
     "id": "b017",
     "name": "Masala Omelette",
     "mealType": "breakfast",
-    "cuisineTag": ["Indian", "High Protein", "Continental"],
+    "cuisineTag": [
+      "Indian",
+      "High Protein",
+      "Continental"
+    ],
     "prepTime": 5,
     "cookTime": 10,
     "servings": 2,
@@ -549,15 +1384,51 @@
     "chefInspiration": "Ranveer Brar",
     "description": "Fluffy Indian-style omelette loaded with onion, green chilli, tomato, and coriander — a street-stall classic.",
     "ingredients": [
-      { "name": "eggs", "quantity": "3", "unit": "piece" },
-      { "name": "onion, finely chopped", "quantity": "0.5", "unit": "piece" },
-      { "name": "tomato, finely chopped", "quantity": "0.5", "unit": "piece" },
-      { "name": "green chilli, finely chopped", "quantity": "1", "unit": "piece" },
-      { "name": "fresh coriander", "quantity": "1", "unit": "tbsp" },
-      { "name": "turmeric", "quantity": "a pinch", "unit": "" },
-      { "name": "red chilli powder", "quantity": "0.25", "unit": "tsp" },
-      { "name": "butter", "quantity": "1", "unit": "tbsp" },
-      { "name": "salt and pepper", "quantity": "to taste", "unit": "" }
+      {
+        "name": "eggs",
+        "quantity": "3",
+        "unit": "piece"
+      },
+      {
+        "name": "onion, finely chopped",
+        "quantity": "0.5",
+        "unit": "piece"
+      },
+      {
+        "name": "tomato, finely chopped",
+        "quantity": "0.5",
+        "unit": "piece"
+      },
+      {
+        "name": "green chilli, finely chopped",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "fresh coriander",
+        "quantity": "1",
+        "unit": "tbsp"
+      },
+      {
+        "name": "turmeric",
+        "quantity": "a pinch",
+        "unit": ""
+      },
+      {
+        "name": "red chilli powder",
+        "quantity": "0.25",
+        "unit": "tsp"
+      },
+      {
+        "name": "butter",
+        "quantity": "1",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt and pepper",
+        "quantity": "to taste",
+        "unit": ""
+      }
     ],
     "steps": [
       "Whisk eggs with turmeric, red chilli, salt, and pepper until frothy.",
@@ -566,14 +1437,23 @@
       "Pour egg mixture and swirl to cover pan. Let edges set for 1 minute.",
       "Fold in half once the centre is just set. Slide onto a plate and serve with toast."
     ],
-    "macros": { "calories": 220, "protein": 14, "carbs": 5, "fats": 16, "fibre": 1 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 220,
+      "protein": 14,
+      "carbs": 5,
+      "fats": 16,
+      "fibre": 1
+    },
+    "imageUrl": "assets/recipes/b017.png"
   },
   {
     "id": "b018",
     "name": "Fluffy Pancakes",
     "mealType": "breakfast",
-    "cuisineTag": ["Continental", "Comfort Food"],
+    "cuisineTag": [
+      "Continental",
+      "Comfort Food"
+    ],
     "prepTime": 10,
     "cookTime": 15,
     "servings": 3,
@@ -581,15 +1461,51 @@
     "chefInspiration": "Kunal Kapur",
     "description": "Light, golden buttermilk pancakes with a hint of vanilla, served with honey, fresh fruit, or maple syrup.",
     "ingredients": [
-      { "name": "all-purpose flour", "quantity": "1", "unit": "cup" },
-      { "name": "egg", "quantity": "1", "unit": "piece" },
-      { "name": "buttermilk", "quantity": "0.75", "unit": "cup" },
-      { "name": "sugar", "quantity": "1", "unit": "tbsp" },
-      { "name": "baking powder", "quantity": "1", "unit": "tsp" },
-      { "name": "baking soda", "quantity": "0.25", "unit": "tsp" },
-      { "name": "vanilla extract", "quantity": "0.5", "unit": "tsp" },
-      { "name": "butter, melted", "quantity": "2", "unit": "tbsp" },
-      { "name": "salt", "quantity": "a pinch", "unit": "" }
+      {
+        "name": "all-purpose flour",
+        "quantity": "1",
+        "unit": "cup"
+      },
+      {
+        "name": "egg",
+        "quantity": "1",
+        "unit": "piece"
+      },
+      {
+        "name": "buttermilk",
+        "quantity": "0.75",
+        "unit": "cup"
+      },
+      {
+        "name": "sugar",
+        "quantity": "1",
+        "unit": "tbsp"
+      },
+      {
+        "name": "baking powder",
+        "quantity": "1",
+        "unit": "tsp"
+      },
+      {
+        "name": "baking soda",
+        "quantity": "0.25",
+        "unit": "tsp"
+      },
+      {
+        "name": "vanilla extract",
+        "quantity": "0.5",
+        "unit": "tsp"
+      },
+      {
+        "name": "butter, melted",
+        "quantity": "2",
+        "unit": "tbsp"
+      },
+      {
+        "name": "salt",
+        "quantity": "a pinch",
+        "unit": ""
+      }
     ],
     "steps": [
       "Whisk flour, sugar, baking powder, baking soda, and salt in a bowl.",
@@ -598,7 +1514,13 @@
       "Heat a non-stick pan on medium-low, pour a ladle of batter. Cook until bubbles form on surface and edges look set.",
       "Flip once and cook 1 minute. Serve stacked with honey, banana slices, or maple syrup."
     ],
-    "macros": { "calories": 280, "protein": 8, "carbs": 42, "fats": 9, "fibre": 1 },
-    "imageUrl": ""
+    "macros": {
+      "calories": 280,
+      "protein": 8,
+      "carbs": 42,
+      "fats": 9,
+      "fibre": 1
+    },
+    "imageUrl": "assets/recipes/b018.png"
   }
 ]
