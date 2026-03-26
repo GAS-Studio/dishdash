@@ -38,6 +38,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="pantry"
+        options={{
+          title: 'Pantry',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="basket" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
