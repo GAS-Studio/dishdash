@@ -17,13 +17,39 @@ export type DishResult = {
   difficulty: string;
 };
 
+const MOCK_RESULT: DishResult = {
+  name: "Butter Chicken",
+  cuisine: "Punjabi, North Indian",
+  confidence: 0.96,
+  description: "Tender chicken in a rich, creamy tomato-butter sauce — a true Indian classic.",
+  ingredients: ["chicken", "butter", "tomato", "cream", "ginger-garlic paste", "kashmiri red chilli", "garam masala", "kasuri methi"],
+  steps: [
+    "Marinate chicken in yoghurt and spices for 30 minutes.",
+    "Grill or pan-fry the chicken until charred.",
+    "Make sauce: simmer tomatoes, butter, cashews, and spices, then blend smooth.",
+    "Add chicken to the sauce, simmer 10 minutes.",
+    "Finish with cream and crushed kasuri methi.",
+  ],
+  macros: { calories: 480, protein: 34, carbs: 12, fats: 32, fibre: 3 },
+  prepTime: 20,
+  cookTime: 30,
+  difficulty: "medium",
+};
+
 const VENICE_API_KEY = process.env.EXPO_PUBLIC_VENICE_API_KEY;
 const VENICE_URL = "https://api.venice.ai/api/v1/chat/completions";
+const IS_MOCK = !VENICE_API_KEY;
 
 export async function recognizeDish(
   base64Image: string,
   mimeType: "image/jpeg" | "image/png" | "image/webp" = "image/jpeg"
 ): Promise<DishResult> {
+  // Fallback to mock if no API key is set
+  if (IS_MOCK) {
+    await new Promise((res) => setTimeout(res, 1500));
+    return MOCK_RESULT;
+  }
+
   const response = await fetch(VENICE_URL, {
     method: "POST",
     headers: {
