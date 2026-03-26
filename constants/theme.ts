@@ -45,6 +45,18 @@ export const colors = {
   onError: '#ffffff',
 };
 
+// ── Typography ──
+// Display/heading: Playfair Display (serif, editorial)
+// Body/UI: DM Sans (clean, modern sans-serif)
+export const fonts = {
+  display: 'PlayfairDisplay_800ExtraBold',
+  displayBold: 'PlayfairDisplay_700Bold',
+  body: 'DMSans_400Regular',
+  bodyMedium: 'DMSans_500Medium',
+  bodySemiBold: 'DMSans_600SemiBold',
+  bodyBold: 'DMSans_700Bold',
+};
+
 export const spacing = {
   xs: 4,
   sm: 8,

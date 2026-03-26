@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Recipe } from '../store/useMealStore';
 import recipeImages from '../constants/images';
-import { colors, radius } from '../constants/theme';
+import { colors, fonts, radius } from '../constants/theme';
 
 const { width: RAW_W, height: RAW_H } = Dimensions.get('window');
 const SW = Platform.OS === 'web' ? Math.min(RAW_W, 390) : RAW_W;
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   },
   timeChipText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: fonts.bodyBold,
     color: colors.onSurface,
   },
   cuisineChip: {
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
   },
   cuisineChipText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: fonts.bodyBold,
     color: colors.onTertiaryContainer,
     letterSpacing: 0.5,
   },
@@ -242,13 +242,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 21,
-    fontWeight: '800',
+    fontFamily: fonts.display,
     color: colors.onSurface,
     lineHeight: 26,
-    letterSpacing: -0.4,
   },
   desc: {
     fontSize: 13,
+    fontFamily: fonts.body,
     color: colors.onSurfaceVariant,
     lineHeight: 18,
   },
@@ -274,12 +274,12 @@ const styles = StyleSheet.create({
   },
   macroValue: {
     fontSize: 15,
-    fontWeight: '800',
+    fontFamily: fonts.bodyBold,
     color: colors.onSurface,
   },
   macroLabel: {
     fontSize: 9,
-    fontWeight: '600',
+    fontFamily: fonts.bodySemiBold,
     color: colors.onSurfaceVariant,
     letterSpacing: 0.3,
   },
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
   },
   skipLabel: {
     fontSize: 9,
-    fontWeight: '700',
+    fontFamily: fonts.bodyBold,
     color: colors.onSurfaceVariant,
     letterSpacing: 1.5,
   },
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
   },
   selectLabel: {
     fontSize: 9,
-    fontWeight: '700',
+    fontFamily: fonts.bodyBold,
     color: colors.primary,
     letterSpacing: 1.5,
   },

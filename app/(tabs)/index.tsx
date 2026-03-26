@@ -5,14 +5,13 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
-  Alert,
   Platform,
   ScrollView,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useMealStore, Recipe } from '../../store/useMealStore';
 import RecipeCard from '../../components/RecipeCard';
-import { colors, radius } from '../../constants/theme';
+import { colors, fonts, radius } from '../../constants/theme';
 import recipesRaw from '../../data/recipes_lunchdinner.json';
 
 const recipes = recipesRaw as Recipe[];
@@ -51,14 +50,7 @@ export default function DiscoverScreen() {
       setCurrentIndex(index + 1);
       if (index + 1 >= recipes.length) setAllSwiped(true);
     }
-    Alert.alert(
-      `Added to ${slot}! 🎉`,
-      recipe.name,
-      [
-        { text: "View Today's Plan", onPress: () => router.push('/(tabs)/plan') },
-        { text: 'Keep Swiping', style: 'cancel' },
-      ]
-    );
+    router.push({ pathname: '/recipe/[id]', params: { id: recipe.id, slot } });
   };
 
   const handleSkip = (index: number) => {
@@ -247,9 +239,8 @@ const styles = StyleSheet.create({
   avatarEmoji: { fontSize: 18 },
   headerTitle: {
     fontSize: 17,
-    fontWeight: '900',
+    fontFamily: fonts.display,
     color: colors.onSurface,
-    letterSpacing: -0.3,
   },
   planBtn: {
     backgroundColor: colors.surfaceContainerHigh,
@@ -259,7 +250,7 @@ const styles = StyleSheet.create({
   },
   planBtnText: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: fonts.bodyBold,
     color: colors.primary,
   },
   deckArea: {
@@ -273,7 +264,7 @@ const styles = StyleSheet.create({
   hint: {
     textAlign: 'center',
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: fonts.bodyBold,
     color: colors.onSurfaceVariant,
     letterSpacing: 1.5,
     textTransform: 'uppercase',
@@ -290,12 +281,13 @@ const styles = StyleSheet.create({
   emptyEmoji: { fontSize: 56 },
   emptyTitle: {
     fontSize: 22,
-    fontWeight: '800',
+    fontFamily: fonts.display,
     color: colors.onSurface,
     textAlign: 'center',
   },
   emptySubtitle: {
     fontSize: 14,
+    fontFamily: fonts.body,
     color: colors.onSurfaceVariant,
     textAlign: 'center',
   },
@@ -308,7 +300,7 @@ const styles = StyleSheet.create({
   },
   emptyBtnText: {
     color: colors.onPrimary,
-    fontWeight: '700',
+    fontFamily: fonts.bodyBold,
     fontSize: 15,
   },
 });
