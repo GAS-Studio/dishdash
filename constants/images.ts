@@ -1,6 +1,26 @@
 // Static image map — React Native requires static requires (no dynamic paths)
 // Maps recipe IDs to local assets in assets/recipes/
 const recipeImages: Record<string, any> = {
+  // ── Breakfast ──
+  b001: require('../assets/recipes/b001.png'),
+  b002: require('../assets/recipes/b002.png'),
+  b003: require('../assets/recipes/b003.png'),
+  b004: require('../assets/recipes/b004.png'),
+  b005: require('../assets/recipes/b005.png'),
+  b006: require('../assets/recipes/b006.png'),
+  b007: require('../assets/recipes/b007.png'),
+  b008: require('../assets/recipes/b008.png'),
+  b009: require('../assets/recipes/b009.png'),
+  b010: require('../assets/recipes/b010.png'),
+  b011: require('../assets/recipes/b011.png'),
+  b012: require('../assets/recipes/b012.png'),
+  b013: require('../assets/recipes/b013.png'),
+  b014: require('../assets/recipes/b014.png'),
+  b015: require('../assets/recipes/b015.png'),
+  b016: require('../assets/recipes/b016.png'),
+  b017: require('../assets/recipes/b017.png'),
+  b018: require('../assets/recipes/b018.png'),
+  // ── Lunch / Dinner ──
   ld001: require('../assets/recipes/ld001_butter_paneer_masala.jpg'),
   ld002: require('../assets/recipes/ld002_kadhai_paneer.jpg'),
   ld003: require('../assets/recipes/ld003_soya_masala.jpg'),
