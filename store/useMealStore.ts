@@ -30,11 +30,17 @@ export type Recipe = {
 };
 
 type MealStore = {
+  // Today's Plan
   lunch: Recipe | null;
   dinner: Recipe | null;
   setLunch: (recipe: Recipe) => void;
   setDinner: (recipe: Recipe) => void;
   clearPlan: () => void;
+
+  // Pantry filter
+  pantryIngredients: string[];
+  togglePantryIngredient: (ingredient: string) => void;
+  clearPantry: () => void;
 };
 
 export const useMealStore = create<MealStore>((set) => ({
@@ -43,4 +49,13 @@ export const useMealStore = create<MealStore>((set) => ({
   setLunch: (recipe) => set({ lunch: recipe }),
   setDinner: (recipe) => set({ dinner: recipe }),
   clearPlan: () => set({ lunch: null, dinner: null }),
+
+  pantryIngredients: [],
+  togglePantryIngredient: (ingredient) =>
+    set((state) => ({
+      pantryIngredients: state.pantryIngredients.includes(ingredient)
+        ? state.pantryIngredients.filter((i) => i !== ingredient)
+        : [...state.pantryIngredients, ingredient],
+    })),
+  clearPantry: () => set({ pantryIngredients: [] }),
 }));
