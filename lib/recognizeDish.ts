@@ -19,8 +19,29 @@ export type DishResult = {
   difficulty: string;
 };
 
+const MOCK_RESULT: DishResult = {
+  name: "Butter Chicken",
+  cuisine: "Punjabi, North Indian",
+  confidence: 0.96,
+  description: "Tender chicken in a rich, creamy tomato-butter sauce — a true Indian classic.",
+  ingredients: ["chicken", "butter", "tomato", "cream", "ginger-garlic paste", "kashmiri red chilli", "garam masala", "kasuri methi"],
+  steps: [
+    "Marinate chicken in yoghurt and spices for 30 minutes.",
+    "Grill or pan-fry the chicken until charred.",
+    "Make sauce: simmer tomatoes, butter, cashews, and spices, then blend smooth.",
+    "Add chicken to the sauce, simmer 10 minutes.",
+    "Finish with cream and crushed kasuri methi.",
+  ],
+  macros: { calories: 480, protein: 34, carbs: 12, fats: 32, fibre: 3 },
+  prepTime: 20,
+  cookTime: 30,
+  difficulty: "medium",
+};
+
+const IS_MOCK = !process.env.EXPO_PUBLIC_CLAUDE_API_KEY;
+
 const client = new Anthropic({
-  apiKey: process.env.EXPO_PUBLIC_CLAUDE_API_KEY,
+  apiKey: process.env.EXPO_PUBLIC_CLAUDE_API_KEY ?? "mock",
   dangerouslyAllowBrowser: true,
 });
 
@@ -28,6 +49,11 @@ export async function recognizeDish(
   base64Image: string,
   mimeType: "image/jpeg" | "image/png" | "image/webp" = "image/jpeg"
 ): Promise<DishResult> {
+  if (IS_MOCK) {
+    await new Promise((res) => setTimeout(res, 1500)); // simulate network delay
+    return MOCK_RESULT;
+  }
+
   const response = await client.messages.create({
     model: "claude-sonnet-4-20250514",
     max_tokens: 1024,
