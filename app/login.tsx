@@ -7,10 +7,12 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, radius, spacing } from '../constants/theme';
 import { useAuth } from '../hooks/useAuth';
+import { useGoogleAuth } from '../hooks/useGoogleAuth';
 
 export default function LoginScreen() {
   const router = useRouter();
   const { signInWithEmail, resetPassword } = useAuth();
+  const { signInWithGoogle } = useGoogleAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
@@ -67,9 +69,20 @@ export default function LoginScreen() {
     }
   };
 
-  const handleSocialLogin = () => {
-    // TODO: Implement Google OAuth
-    showAlert('Coming Soon', 'Google sign-in will be available soon!');
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      await signInWithGoogle();
+      // On web, the page redirects, so we don't need to navigate
+      // On native, the auth state change will trigger navigation
+    } catch (e: any) {
+      const message = e.message || 'Google sign-in failed.';
+      setError(message);
+      showAlert('Sign-in Failed', message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -165,15 +178,15 @@ export default function LoginScreen() {
             <View style={styles.dividerLine} />
           </View>
 
-          {/* Social buttons */}
-          <TouchableOpacity style={styles.socialBtn} onPress={handleSocialLogin} activeOpacity={0.85}>
+          {/* Google Sign-in */}
+          <TouchableOpacity
+            style={[styles.socialBtn, loading && styles.primaryBtnDisabled]}
+            onPress={handleGoogleLogin}
+            activeOpacity={0.85}
+            disabled={loading}
+          >
             <Ionicons name="logo-google" size={20} color={colors.onSurface} />
             <Text style={styles.socialBtnText}>Continue with Google</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.socialBtn} onPress={handleSocialLogin} activeOpacity={0.85}>
-            <Ionicons name="logo-apple" size={20} color={colors.onSurface} />
-            <Text style={styles.socialBtnText}>Continue with Apple</Text>
           </TouchableOpacity>
 
           {/* Sign up link */}
