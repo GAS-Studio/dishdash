@@ -118,40 +118,66 @@ Home cooks (primarily Indian cuisine enthusiasts) who want quick recipe inspirat
 
 ## Project Structure
 
+Here's how the codebase is organized — each folder has a specific job:
+
 ```
 dishdash/
-├── app/                           # Screens & routing (Expo Router)
-│   ├── _layout.tsx               # Root layout, font loading, web phone-frame
-│   ├── index.tsx                 # Auth check → redirect
-│   ├── landing.tsx               # Marketing landing page
-│   ├── login.tsx                 # Email login
-│   ├── signup.tsx                # Account registration
-│   ├── (tabs)/                   # Bottom tab navigator
-│   │   ├── _layout.tsx           # Tab bar config (4 visible tabs)
-│   │   ├── index.tsx             # Discover — swipe deck
-│   │   ├── pantry.tsx            # Pantry — ingredient filter
-│   │   ├── upload.tsx            # Log — AI dish recognition
-│   │   ├── browse.tsx            # Feedback — user reviews
-│   │   └── plan.tsx              # Today's Plan — meal display
+│
+├── app/                            # All the SCREENS (pages) of the app
+│   │                               #   Expo Router uses file names as URLs
+│   │                               #   (like Next.js for mobile!)
+│   │
+│   ├── _layout.tsx                 # Wraps every screen — loads fonts,
+│   │                               #   adds the phone-frame on web
+│   ├── index.tsx                   # First thing that runs — checks if
+│   │                               #   you're logged in, then redirects
+│   ├── landing.tsx                 # Welcome page new users see first
+│   ├── login.tsx                   # Log in with your email
+│   ├── signup.tsx                  # Create a new account
+│   │
+│   ├── (tabs)/                     # The 4 tabs at the bottom of the app
+│   │   ├── _layout.tsx             # Configures the tab bar (icons, colors)
+│   │   ├── index.tsx               # 🍽️ Discover — swipe through recipe cards
+│   │   ├── pantry.tsx              # 📋 Pantry — pick ingredients, find recipes
+│   │   ├── upload.tsx              # 📷 Log — snap a photo, AI identifies the dish
+│   │   ├── browse.tsx              # 💬 Feedback — rate the app & leave reviews
+│   │   └── plan.tsx                # 📅 Today's Plan — see your lunch & dinner
+│   │
 │   └── recipe/
-│       └── [id].tsx              # Recipe detail (dynamic route)
-├── components/
-│   ├── RecipeCard.tsx            # Swipeable recipe card
-│   └── SharedHeader.tsx          # Branded header with nav
-├── store/
-│   └── useMealStore.ts           # Zustand global store
-├── constants/
-│   ├── theme.ts                  # Design tokens (colors, fonts, spacing)
-│   ├── ingredientCategories.ts   # Pantry ingredient data
-│   └── images.ts                 # Static image imports map
-├── data/
-│   ├── recipes_breakfast.json    # 18 breakfast recipes
-│   └── recipes_lunchdinner.json  # 25+ lunch/dinner recipes
-├── lib/
-│   └── recognizeDish.ts          # Venice AI dish recognition
-└── assets/
-    └── recipes/                  # 45 recipe images (b001-b018, ld001-ld026)
+│       └── [id].tsx                # Recipe detail page — the [id] means it's
+│                                   #   dynamic (one page for ALL recipes)
+│
+├── components/                     # REUSABLE UI pieces (used across screens)
+│   ├── RecipeCard.tsx              # The swipeable card in the Discover tab
+│   └── SharedHeader.tsx            # "DishDash" logo + "Today's Plan" button
+│                                   #   shown at the top of every screen
+│
+├── store/                          # APP STATE (Zustand) — the "brain" of the app
+│   └── useMealStore.ts             # Stores: logged-in user, selected meals,
+│                                   #   pantry ingredients, feedback history
+│                                   #   Saves to localStorage so data survives refresh
+│
+├── constants/                      # SETTINGS & CONFIG that don't change
+│   ├── theme.ts                    # Brand colors, fonts, spacing, border radius
+│   ├── ingredientCategories.ts     # List of all pantry ingredients by category
+│   └── images.ts                   # Maps recipe IDs → their image files
+│
+├── data/                           # RECIPE DATABASE (static JSON files)
+│   ├── recipes_breakfast.json      # 18 breakfast recipes (Poha, Dosa, Idli…)
+│   └── recipes_lunchdinner.json    # 25+ lunch & dinner recipes (Dal, Paneer…)
+│
+├── lib/                            # UTILITIES & API helpers
+│   └── recognizeDish.ts            # Sends photos to Venice AI (GPT-4o Vision)
+│                                   #   to identify dishes — falls back to mock
+│                                   #   data if no API key is set
+│
+└── assets/                         # STATIC FILES (images, icons)
+    └── recipes/                    # 45 food photos used on recipe cards
+        ├── b001.png … b018.png     # Breakfast images
+        └── ld001.jpg … ld026.jpg   # Lunch & dinner images
 ```
+
+> **Tip for beginners:** Start by reading `app/index.tsx` (the entry point), then `app/(tabs)/index.tsx` (the Discover screen), and `store/useMealStore.ts` (the state). That gives you the full picture of how data flows through the app!
 
 ---
 
