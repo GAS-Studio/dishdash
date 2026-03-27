@@ -1,36 +1,75 @@
 import React, { useState } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView,
-  KeyboardAvoidingView, Platform, ScrollView, Alert,
+  KeyboardAvoidingView, Platform, ScrollView, Alert, ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, radius, spacing } from '../constants/theme';
-import { useMealStore } from '../store/useMealStore';
+import { useAuth } from '../hooks/useAuth';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const { login } = useMealStore();
+  const { signInWithEmail, resetPassword } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleLogin = () => {
+  const showAlert = (title: string, message: string) => {
+    if (Platform.OS === 'web') {
+      window.alert(`${title}: ${message}`);
+    } else {
+      Alert.alert(title, message);
+    }
+  };
+
+  const handleLogin = async () => {
     if (!email.trim()) {
-      if (Platform.OS === 'web') {
-        window.alert('Please enter your email.');
-      } else {
-        Alert.alert('Missing Info', 'Please enter your email.');
-      }
+      showAlert('Missing Info', 'Please enter your email.');
       return;
     }
-    login(email.trim());
-    router.replace('/(tabs)');
+    if (!password.trim()) {
+      showAlert('Missing Info', 'Please enter your password.');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      await signInWithEmail(email.trim(), password);
+      router.replace('/(tabs)');
+    } catch (e: any) {
+      const message = e.message || 'Login failed. Please try again.';
+      setError(message);
+      showAlert('Login Failed', message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email.trim()) {
+      showAlert('Email Required', 'Please enter your email address first.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await resetPassword(email.trim());
+      showAlert('Check Your Email', 'We sent you a password reset link.');
+    } catch (e: any) {
+      showAlert('Error', e.message || 'Could not send reset email.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSocialLogin = () => {
-    login('user@dishdash.app');
-    router.replace('/(tabs)');
+    // TODO: Implement Google OAuth
+    showAlert('Coming Soon', 'Google sign-in will be available soon!');
   };
 
   return (
@@ -98,13 +137,25 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          <TouchableOpacity style={styles.forgotBtn} activeOpacity={0.7}>
+          <TouchableOpacity style={styles.forgotBtn} onPress={handleForgotPassword} activeOpacity={0.7}>
             <Text style={styles.forgotText}>Forgot password?</Text>
           </TouchableOpacity>
 
+          {/* Error message */}
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
           {/* Login Button */}
-          <TouchableOpacity style={styles.primaryBtn} onPress={handleLogin} activeOpacity={0.85}>
-            <Text style={styles.primaryBtnText}>Login</Text>
+          <TouchableOpacity
+            style={[styles.primaryBtn, loading && styles.primaryBtnDisabled]}
+            onPress={handleLogin}
+            activeOpacity={0.85}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color={colors.onPrimary} />
+            ) : (
+              <Text style={styles.primaryBtnText}>Login</Text>
+            )}
           </TouchableOpacity>
 
           {/* Divider */}
@@ -172,8 +223,12 @@ const styles = StyleSheet.create({
   input: {
     flex: 1, fontSize: 14, fontFamily: fonts.body, color: colors.onSurface,
   },
-  forgotBtn: { alignSelf: 'flex-end', marginBottom: 24 },
+  forgotBtn: { alignSelf: 'flex-end', marginBottom: 12 },
   forgotText: { fontSize: 13, fontFamily: fonts.bodySemiBold, color: colors.primary },
+  errorText: {
+    fontSize: 13, fontFamily: fonts.body, color: '#D32F2F',
+    textAlign: 'center', marginBottom: 12,
+  },
   primaryBtn: {
     backgroundColor: colors.primary, paddingVertical: 16,
     borderRadius: radius.full, alignItems: 'center',
@@ -182,6 +237,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   primaryBtnText: { fontSize: 16, fontFamily: fonts.bodyBold, color: colors.onPrimary },
+  primaryBtnDisabled: { opacity: 0.7 },
   divider: {
     flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 20,
   },

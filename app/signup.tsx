@@ -1,37 +1,64 @@
 import React, { useState } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView,
-  KeyboardAvoidingView, Platform, ScrollView, Alert,
+  KeyboardAvoidingView, Platform, ScrollView, Alert, ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, radius } from '../constants/theme';
-import { useMealStore } from '../store/useMealStore';
+import { useAuth } from '../hooks/useAuth';
 
 export default function SignUpScreen() {
   const router = useRouter();
-  const { signUp } = useMealStore();
+  const { signUpWithEmail } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSignUp = () => {
-    if (!name.trim() || !email.trim()) {
-      if (Platform.OS === 'web') {
-        window.alert('Please fill in your name and email.');
-      } else {
-        Alert.alert('Missing Info', 'Please fill in your name and email.');
-      }
+  const showAlert = (title: string, message: string) => {
+    if (Platform.OS === 'web') {
+      window.alert(`${title}: ${message}`);
+    } else {
+      Alert.alert(title, message);
+    }
+  };
+
+  const handleSignUp = async () => {
+    if (!name.trim()) {
+      showAlert('Missing Info', 'Please enter your name.');
       return;
     }
-    signUp(name.trim(), email.trim());
-    router.replace('/(tabs)');
+    if (!email.trim()) {
+      showAlert('Missing Info', 'Please enter your email.');
+      return;
+    }
+    if (!password.trim() || password.length < 6) {
+      showAlert('Weak Password', 'Password must be at least 6 characters.');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+
+    try {
+      await signUpWithEmail(email.trim(), password, name.trim());
+      showAlert('Check Your Email', 'We sent you a confirmation link. Please verify your email to continue.');
+      router.replace('/login');
+    } catch (e: any) {
+      const message = e.message || 'Sign up failed. Please try again.';
+      setError(message);
+      showAlert('Sign Up Failed', message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSocialSignUp = () => {
-    signUp('DishDash User', 'user@dishdash.app');
-    router.replace('/(tabs)');
+    // TODO: Implement Google OAuth
+    showAlert('Coming Soon', 'Google sign-up will be available soon!');
   };
 
   return (
@@ -114,9 +141,21 @@ export default function SignUpScreen() {
             </View>
           </View>
 
+          {/* Error message */}
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+
           {/* Sign Up Button */}
-          <TouchableOpacity style={styles.primaryBtn} onPress={handleSignUp} activeOpacity={0.85}>
-            <Text style={styles.primaryBtnText}>Create Account</Text>
+          <TouchableOpacity
+            style={[styles.primaryBtn, loading && styles.primaryBtnDisabled]}
+            onPress={handleSignUp}
+            activeOpacity={0.85}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color={colors.onPrimary} />
+            ) : (
+              <Text style={styles.primaryBtnText}>Create Account</Text>
+            )}
           </TouchableOpacity>
 
           {/* Divider */}
@@ -184,6 +223,10 @@ const styles = StyleSheet.create({
   input: {
     flex: 1, fontSize: 14, fontFamily: fonts.body, color: colors.onSurface,
   },
+  errorText: {
+    fontSize: 13, fontFamily: fonts.body, color: '#D32F2F',
+    textAlign: 'center', marginBottom: 12,
+  },
   primaryBtn: {
     backgroundColor: colors.primary, paddingVertical: 16,
     borderRadius: radius.full, alignItems: 'center',
@@ -192,6 +235,7 @@ const styles = StyleSheet.create({
     marginTop: 8, marginBottom: 20,
   },
   primaryBtnText: { fontSize: 16, fontFamily: fonts.bodyBold, color: colors.onPrimary },
+  primaryBtnDisabled: { opacity: 0.7 },
   divider: {
     flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 20,
   },

@@ -54,32 +54,23 @@ export type FeedbackEntry = {
   timestamp: number;
 };
 
-export type User = {
-  name: string;
-  email: string;
-};
+// Note: Auth is now handled by Supabase via useAuth hook
+// This store only manages meal plans and local UI state
 
 type MealStore = {
-  // User auth
-  user: User | null;
-  isLoggedIn: boolean;
-  signUp: (name: string, email: string) => void;
-  login: (email: string) => void;
-  logout: () => void;
-
-  // Today's Plan
+  // Today's Plan (synced to Supabase when logged in)
   lunch: Recipe | null;
   dinner: Recipe | null;
-  setLunch: (recipe: Recipe) => void;
-  setDinner: (recipe: Recipe) => void;
+  setLunch: (recipe: Recipe | null) => void;
+  setDinner: (recipe: Recipe | null) => void;
   clearPlan: () => void;
 
-  // Pantry filter
+  // Pantry filter (local UI state, not persisted)
   pantryIngredients: string[];
   togglePantryIngredient: (ingredient: string) => void;
   clearPantry: () => void;
 
-  // Feedback
+  // Feedback (will be synced to Supabase)
   feedbackHistory: FeedbackEntry[];
   submitFeedback: (rating: number, categories: string[], text: string) => void;
 };
@@ -87,18 +78,6 @@ type MealStore = {
 export const useMealStore = create<MealStore>()(
   persist(
     (set) => ({
-      // User auth
-      user: null,
-      isLoggedIn: false,
-      signUp: (name, email) =>
-        set({ user: { name, email }, isLoggedIn: true }),
-      login: (email) =>
-        set((state) => ({
-          user: { name: state.user?.name || email.split('@')[0], email },
-          isLoggedIn: true,
-        })),
-      logout: () => set({ user: null, isLoggedIn: false }),
-
       // Today's Plan
       lunch: null,
       dinner: null,
@@ -135,10 +114,8 @@ export const useMealStore = create<MealStore>()(
     {
       name: 'dishdash-storage',
       storage: createJSONStorage(() => storage),
-      // Only persist user auth and feedback — not transient UI state like pantry selections
+      // Persist meal plans and feedback - pantry is transient UI state
       partialize: (state) => ({
-        user: state.user,
-        isLoggedIn: state.isLoggedIn,
         lunch: state.lunch,
         dinner: state.dinner,
         feedbackHistory: state.feedbackHistory,
