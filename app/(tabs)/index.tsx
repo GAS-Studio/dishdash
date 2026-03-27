@@ -70,7 +70,7 @@ export default function DiscoverScreen() {
           <View style={styles.avatar}>
             <Text style={styles.avatarEmoji}>🍽</Text>
           </View>
-          <Text style={styles.headerTitle}>The Culinary Editorial</Text>
+          <Text style={styles.headerTitle}>The Culinary Experience</Text>
         </View>
         <TouchableOpacity
           style={styles.planBtn}

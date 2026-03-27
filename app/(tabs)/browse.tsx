@@ -5,7 +5,7 @@ export default function BrowseScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>The Culinary Editorial</Text>
+        <Text style={styles.headerTitle}>The Culinary Experience</Text>
       </View>
       <View style={styles.body}>
         <View style={styles.card}>
