@@ -10,13 +10,13 @@ import {
   Alert,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import * as FileSystem from "expo-file-system";
 import { Ionicons } from "@expo/vector-icons";
 import { recognizeDish, type DishResult } from "../../lib/recognizeDish";
 import { useMealStore, type Recipe } from "../../store/useMealStore";
 
 export default function UploadScreen() {
   const [imageUri, setImageUri] = useState<string | null>(null);
+  const [imageBase64, setImageBase64] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<DishResult | null>(null);
   const [added, setAdded] = useState(false);
@@ -28,11 +28,12 @@ export default function UploadScreen() {
   const pickImage = async (useCamera: boolean) => {
     setResult(null);
     setAdded(false);
+    setImageBase64(null);
 
     const options: ImagePicker.ImagePickerOptions = {
       mediaTypes: ["images"],
       quality: 0.7,
-      base64: false,
+      base64: true,
     };
 
     const pickerResult = useCamera
@@ -41,23 +42,19 @@ export default function UploadScreen() {
 
     if (!pickerResult.canceled && pickerResult.assets[0]) {
       setImageUri(pickerResult.assets[0].uri);
+      setImageBase64(pickerResult.assets[0].base64 || null);
     }
   };
 
   const recognize = async () => {
-    if (!imageUri) return;
+    if (!imageUri || !imageBase64) return;
     setLoading(true);
     try {
-      // Read file as base64
-      const base64 = await FileSystem.readAsStringAsync(imageUri, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-
       const mimeType = imageUri.toLowerCase().endsWith(".png")
         ? "image/png"
         : "image/jpeg";
 
-      const dish = await recognizeDish(base64, mimeType as "image/jpeg" | "image/png");
+      const dish = await recognizeDish(imageBase64, mimeType as "image/jpeg" | "image/png");
       setResult(dish);
     } catch (err) {
       console.error(err);
@@ -140,6 +137,7 @@ export default function UploadScreen() {
               style={styles.closeButton}
               onPress={() => {
                 setImageUri(null);
+                setImageBase64(null);
                 setResult(null);
                 setAdded(false);
               }}

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Platform,
   ScrollView,
+  Modal,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useMealStore, Recipe } from '../../store/useMealStore';
@@ -29,29 +30,33 @@ export default function DiscoverScreen() {
   const { lunch, dinner, setLunch, setDinner } = useMealStore();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [allSwiped, setAllSwiped] = useState(false);
+  const [showMealModal, setShowMealModal] = useState(false);
+  const [pendingRecipe, setPendingRecipe] = useState<{ recipe: Recipe; index: number } | null>(null);
 
-  const pickMealSlot = (recipe: Recipe): string => {
-    const hour = new Date().getHours();
-    if (hour < 15 && !lunch) {
+  const confirmMealSlot = (slot: 'Lunch' | 'Dinner') => {
+    if (!pendingRecipe) return;
+    const { recipe, index } = pendingRecipe;
+
+    if (slot === 'Lunch') {
       setLunch(recipe);
-      return 'Lunch';
-    } else if (!dinner) {
-      setDinner(recipe);
-      return 'Dinner';
     } else {
-      setLunch(recipe);
-      return 'Lunch';
+      setDinner(recipe);
     }
-  };
 
-  const handleSelect = (index: number) => {
-    const recipe = recipes[index];
-    const slot = pickMealSlot(recipe);
     if (Platform.OS === 'web') {
       setCurrentIndex(index + 1);
       if (index + 1 >= recipes.length) setAllSwiped(true);
     }
+
+    setShowMealModal(false);
+    setPendingRecipe(null);
     router.push({ pathname: '/recipe/[id]', params: { id: recipe.id, slot } });
+  };
+
+  const handleSelect = (index: number) => {
+    const recipe = recipes[index];
+    setPendingRecipe({ recipe, index });
+    setShowMealModal(true);
   };
 
   const handleSkip = (index: number) => {
@@ -200,6 +205,50 @@ export default function DiscoverScreen() {
         </Text>
       )}
 
+      {/* ── Meal Selection Modal ── */}
+      <Modal
+        visible={showMealModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowMealModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Add to your plan</Text>
+            <Text style={styles.modalSubtitle}>
+              When would you like to have {pendingRecipe?.recipe.name}?
+            </Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.modalBtn, styles.lunchBtn]}
+                onPress={() => confirmMealSlot('Lunch')}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.modalBtnEmoji}>☀️</Text>
+                <Text style={styles.modalBtnText}>Lunch</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalBtn, styles.dinnerBtn]}
+                onPress={() => confirmMealSlot('Dinner')}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.modalBtnEmoji}>🌙</Text>
+                <Text style={styles.modalBtnText}>Dinner</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={styles.modalCancel}
+              onPress={() => {
+                setShowMealModal(false);
+                setPendingRecipe(null);
+              }}
+            >
+              <Text style={styles.modalCancelText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
     </SafeAreaView>
   );
 }
@@ -244,7 +293,7 @@ const styles = StyleSheet.create({
   webCardContainer: {
     alignItems: 'center',
     paddingTop: 8,
-    paddingBottom: 16,
+    paddingBottom: 100,
   },
   hint: {
     textAlign: 'center',
@@ -287,5 +336,75 @@ const styles = StyleSheet.create({
     color: colors.onPrimary,
     fontFamily: fonts.bodyBold,
     fontSize: 15,
+  },
+  // Modal styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: colors.surface,
+    borderRadius: 24,
+    padding: 24,
+    width: '100%',
+    maxWidth: 340,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontFamily: fonts.display,
+    color: colors.onSurface,
+    marginBottom: 8,
+  },
+  modalSubtitle: {
+    fontSize: 14,
+    fontFamily: fonts.body,
+    color: colors.onSurfaceVariant,
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    gap: 12,
+    width: '100%',
+  },
+  modalBtn: {
+    flex: 1,
+    paddingVertical: 16,
+    borderRadius: 16,
+    alignItems: 'center',
+    gap: 4,
+  },
+  lunchBtn: {
+    backgroundColor: '#FFF3E0',
+  },
+  dinnerBtn: {
+    backgroundColor: '#E8EAF6',
+  },
+  modalBtnEmoji: {
+    fontSize: 24,
+  },
+  modalBtnText: {
+    fontSize: 16,
+    fontFamily: fonts.bodyBold,
+    color: colors.onSurface,
+  },
+  modalCancel: {
+    marginTop: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+  },
+  modalCancelText: {
+    fontSize: 14,
+    fontFamily: fonts.body,
+    color: colors.onSurfaceVariant,
   },
 });
