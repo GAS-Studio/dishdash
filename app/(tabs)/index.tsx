@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
@@ -66,12 +67,11 @@ export default function DiscoverScreen() {
 
       {/* ── Header ── */}
       <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarEmoji}>🍽</Text>
-          </View>
-          <Text style={styles.headerTitle}>The Culinary Experience</Text>
-        </View>
+        <Image
+          source={require('../../assets/icon.png')}
+          style={styles.headerLogo}
+          resizeMode="contain"
+        />
         <TouchableOpacity
           style={styles.planBtn}
           onPress={() => router.push('/(tabs)/plan')}
@@ -223,24 +223,9 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
   },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  avatar: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: colors.surfaceContainerHigh,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarEmoji: { fontSize: 18 },
-  headerTitle: {
-    fontSize: 17,
-    fontFamily: fonts.display,
-    color: colors.onSurface,
+  headerLogo: {
+    height: 32,
+    width: 140,
   },
   planBtn: {
     backgroundColor: colors.surfaceContainerHigh,
