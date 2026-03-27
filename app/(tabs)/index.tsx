@@ -15,9 +15,10 @@ import { useMealStore, Recipe } from '../../store/useMealStore';
 import RecipeCard from '../../components/RecipeCard';
 import SharedHeader from '../../components/SharedHeader';
 import { colors, fonts, radius } from '../../constants/theme';
-import recipesRaw from '../../data/recipes_lunchdinner.json';
+import recipesLunchDinner from '../../data/recipes_lunchdinner.json';
+import recipesBreakfast from '../../data/recipes_breakfast.json';
 
-const recipes = recipesRaw as Recipe[];
+const recipes: Recipe[] = [...(recipesLunchDinner as Recipe[]), ...(recipesBreakfast as Recipe[])];
 
 // Conditionally import deck swiper (doesn't work on web)
 let Swiper: any = null;
@@ -245,35 +246,6 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: colors.background,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 12,
-    paddingBottom: 10,
-    backgroundColor: 'rgba(255,248,246,0.95)',
-    shadowColor: '#522613',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 3,
-  },
-  headerLogo: {
-    height: 40,
-    width: 180,
-  },
-  planBtn: {
-    backgroundColor: colors.surfaceContainerHigh,
-    paddingHorizontal: 14,
-    paddingVertical: 7,
-    borderRadius: radius.full,
-  },
-  planBtnText: {
-    fontSize: 12,
-    fontFamily: fonts.bodyBold,
-    color: colors.primary,
   },
   deckArea: {
     flex: 1,

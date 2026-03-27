@@ -1,20 +1,36 @@
 import React, { useState } from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image,
-  KeyboardAvoidingView, Platform, ScrollView,
+  View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView,
+  KeyboardAvoidingView, Platform, ScrollView, Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, radius } from '../constants/theme';
+import { useMealStore } from '../store/useMealStore';
 
 export default function SignUpScreen() {
   const router = useRouter();
+  const { signUp } = useMealStore();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
 
   const handleSignUp = () => {
+    if (!name.trim() || !email.trim()) {
+      if (Platform.OS === 'web') {
+        window.alert('Please fill in your name and email.');
+      } else {
+        Alert.alert('Missing Info', 'Please fill in your name and email.');
+      }
+      return;
+    }
+    signUp(name.trim(), email.trim());
+    router.replace('/(tabs)');
+  };
+
+  const handleSocialSignUp = () => {
+    signUp('DishDash User', 'user@dishdash.app');
     router.replace('/(tabs)');
   };
 
@@ -35,11 +51,10 @@ export default function SignUpScreen() {
           </TouchableOpacity>
 
           {/* Logo */}
-          <Image
-            source={require('../assets/icon.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+          <Text style={styles.logoText}>
+            <Text style={styles.logoDish}>Dish</Text>
+            <Text style={styles.logoDash}>Dash</Text>
+          </Text>
 
           <Text style={styles.title}>Create Account</Text>
           <Text style={styles.subtitle}>Join the DishDash community and start cooking smarter</Text>
@@ -112,12 +127,12 @@ export default function SignUpScreen() {
           </View>
 
           {/* Social buttons */}
-          <TouchableOpacity style={styles.socialBtn} onPress={handleSignUp} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.socialBtn} onPress={handleSocialSignUp} activeOpacity={0.85}>
             <Ionicons name="logo-google" size={20} color={colors.onSurface} />
             <Text style={styles.socialBtnText}>Sign up with Google</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.socialBtn} onPress={handleSignUp} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.socialBtn} onPress={handleSocialSignUp} activeOpacity={0.85}>
             <Ionicons name="logo-apple" size={20} color={colors.onSurface} />
             <Text style={styles.socialBtnText}>Sign up with Apple</Text>
           </TouchableOpacity>
@@ -144,7 +159,9 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
     marginBottom: 20,
   },
-  logo: { height: 48, width: 200, alignSelf: 'center', marginBottom: 24 },
+  logoText: { fontSize: 30, alignSelf: 'center', marginBottom: 24 },
+  logoDish: { fontFamily: fonts.displayBold, color: colors.primary },
+  logoDash: { fontFamily: fonts.displayBold, color: colors.secondary },
   title: {
     fontSize: 28, fontFamily: fonts.display,
     color: colors.onBackground, textAlign: 'center', marginBottom: 6,

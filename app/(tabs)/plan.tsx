@@ -1,10 +1,26 @@
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform, Alert } from 'react-native';
 import { useMealStore, Recipe } from '../../store/useMealStore';
 import { colors, fonts, radius } from '../../constants/theme';
 import SharedHeader from '../../components/SharedHeader';
 
 export default function TodaysPlanScreen() {
   const { lunch, dinner, clearPlan } = useMealStore();
+
+  const handleClearPlan = () => {
+    if (Platform.OS === 'web') {
+      const confirmed = window.confirm('Clear Plan?\n\nThis will remove both your lunch and dinner selections.');
+      if (confirmed) clearPlan();
+    } else {
+      Alert.alert(
+        'Clear Plan?',
+        'This will remove both your lunch and dinner selections.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Clear', style: 'destructive', onPress: clearPlan },
+        ]
+      );
+    }
+  };
 
   const isEmpty = !lunch && !dinner;
 
@@ -25,7 +41,7 @@ export default function TodaysPlanScreen() {
           <MealCard label="Lunch" recipe={lunch} />
           <MealCard label="Dinner" recipe={dinner} />
 
-          <TouchableOpacity style={styles.clearButton} onPress={clearPlan}>
+          <TouchableOpacity style={styles.clearButton} onPress={handleClearPlan}>
             <Text style={styles.clearButtonText}>Clear Plan</Text>
           </TouchableOpacity>
         </>

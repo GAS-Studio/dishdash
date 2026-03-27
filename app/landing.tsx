@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import {
-  View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView,
+  View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -14,11 +14,10 @@ export default function LandingScreen() {
     <SafeAreaView style={styles.safe}>
       {/* ─── Header ─── */}
       <View style={styles.header}>
-        <Image
-          source={require('../assets/icon.png')}
-          style={styles.headerLogo}
-          resizeMode="contain"
-        />
+        <Text style={styles.headerLogoText}>
+          <Text style={styles.headerLogoDish}>Dish</Text>
+          <Text style={styles.headerLogoDash}>Dash</Text>
+        </Text>
         <View style={styles.headerRight}>
           <TouchableOpacity style={styles.loginBtn} onPress={() => router.push('/login')} activeOpacity={0.8}>
             <Text style={styles.loginBtnText}>Login</Text>
@@ -55,7 +54,7 @@ export default function LandingScreen() {
           </Text>
 
           {/* CTA Buttons */}
-          <TouchableOpacity style={styles.ctaPrimary} onPress={() => router.replace('/(tabs)')} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.ctaPrimary} onPress={() => router.push('/signup')} activeOpacity={0.85}>
             <Text style={styles.ctaPrimaryText}>Start Cooking Free</Text>
           </TouchableOpacity>
 
@@ -187,7 +186,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 8,
   },
-  headerLogo: { height: 52, width: 220 },
+  headerLogoText: { fontSize: 26 },
+  headerLogoDish: { fontFamily: fonts.displayBold, color: colors.primary },
+  headerLogoDash: { fontFamily: fonts.displayBold, color: colors.secondary },
   headerRight: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   loginBtn: {
     paddingHorizontal: 16,

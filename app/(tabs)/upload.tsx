@@ -8,14 +8,20 @@ import {
   ScrollView,
   ActivityIndicator,
   Alert,
+  Platform,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { recognizeDish, type DishResult } from "../../lib/recognizeDish";
 import { useMealStore, type Recipe } from "../../store/useMealStore";
 import SharedHeader from "../../components/SharedHeader";
+import { colors, fonts, radius } from "../../constants/theme";
+
+const TAB_BAR_HEIGHT = Platform.OS === "ios" ? 82 : 72;
 
 export default function UploadScreen() {
+  const router = useRouter();
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [imageBase64, setImageBase64] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -71,7 +77,7 @@ export default function UploadScreen() {
     const recipe: Recipe = {
       id: `ai-${Date.now()}`,
       name: result.name,
-      mealType: mealSlot === "lunch" ? "lunch/dinner" : "lunch/dinner",
+      mealType: "lunch/dinner",
       cuisineTag: [result.cuisine],
       prepTime: result.prepTime,
       cookTime: result.cookTime,
@@ -95,24 +101,27 @@ export default function UploadScreen() {
       setDinner(recipe);
     }
     setAdded(true);
+    // Navigate to plan after a brief moment so user sees confirmation
+    setTimeout(() => {
+      router.push("/(tabs)/plan");
+    }, 600);
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.wrapper}>
       <SharedHeader />
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>Identify Dish</Text>
-        <Text style={styles.subtitle}>
-          Upload a photo and let AI recognize your dish
-        </Text>
-      </View>
 
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
+        {/* Header */}
+        <Text style={styles.title}>Identify Dish</Text>
+        <Text style={styles.subtitle}>
+          Upload a photo and let AI recognize your dish
+        </Text>
+
         {/* Image Area */}
         {!imageUri ? (
           <View style={styles.uploadArea}>
@@ -120,7 +129,7 @@ export default function UploadScreen() {
               style={styles.uploadButton}
               onPress={() => pickImage(true)}
             >
-              <Ionicons name="camera" size={32} color="#FF6B6B" />
+              <Ionicons name="camera" size={32} color={colors.primary} />
               <Text style={styles.uploadText}>Take Photo</Text>
             </TouchableOpacity>
 
@@ -128,7 +137,7 @@ export default function UploadScreen() {
               style={styles.uploadButton}
               onPress={() => pickImage(false)}
             >
-              <Ionicons name="images" size={32} color="#FF6B6B" />
+              <Ionicons name="images" size={32} color={colors.primary} />
               <Text style={styles.uploadText}>Choose from Gallery</Text>
             </TouchableOpacity>
           </View>
@@ -158,12 +167,12 @@ export default function UploadScreen() {
           >
             {loading ? (
               <View style={styles.loadingRow}>
-                <ActivityIndicator color="#fff" size="small" />
+                <ActivityIndicator color={colors.onPrimary} size="small" />
                 <Text style={styles.btnText}>Recognizing...</Text>
               </View>
             ) : (
               <View style={styles.loadingRow}>
-                <Ionicons name="flash" size={20} color="#fff" />
+                <Ionicons name="flash" size={20} color={colors.onPrimary} />
                 <Text style={styles.btnText}>Recognize Dish</Text>
               </View>
             )}
@@ -257,7 +266,7 @@ export default function UploadScreen() {
                 style={styles.addBtn}
                 onPress={handleAddToPlan}
               >
-                <Ionicons name="add-circle" size={22} color="#fff" />
+                <Ionicons name="add-circle" size={22} color={colors.onPrimary} />
                 <Text style={styles.addBtnText}>
                   Add to Today's{" "}
                   {mealSlot === "lunch" ? "Lunch" : "Dinner"}
@@ -265,7 +274,7 @@ export default function UploadScreen() {
               </TouchableOpacity>
             ) : (
               <View style={styles.addedBanner}>
-                <Ionicons name="checkmark-circle" size={22} color="#4CAF50" />
+                <Ionicons name="checkmark-circle" size={22} color={colors.secondary} />
                 <Text style={styles.addedText}>
                   Added to {mealSlot === "lunch" ? "Lunch" : "Dinner"}!
                 </Text>
@@ -279,34 +288,29 @@ export default function UploadScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
-    backgroundColor: "#FFF8F0",
-  },
-  header: {
-    paddingTop: 60,
-    paddingHorizontal: 20,
-    paddingBottom: 16,
-    backgroundColor: "#FFF8F0",
-    borderBottomWidth: 1,
-    borderBottomColor: "#f0e6d9",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "700",
-    color: "#2D2D2D",
-  },
-  subtitle: {
-    fontSize: 14,
-    color: "#888",
-    marginTop: 4,
+    backgroundColor: colors.background,
   },
   scroll: {
     flex: 1,
   },
   scrollContent: {
     padding: 20,
-    paddingBottom: 40,
+    paddingTop: 16,
+    paddingBottom: TAB_BAR_HEIGHT + 40,
+  },
+  title: {
+    fontSize: 26,
+    fontFamily: fonts.displayBold,
+    color: colors.primary,
+    marginBottom: 4,
+  },
+  subtitle: {
+    fontSize: 14,
+    fontFamily: fonts.body,
+    color: colors.onSurfaceVariant,
+    marginBottom: 24,
   },
   // Upload area
   uploadArea: {
@@ -316,30 +320,31 @@ const styles = StyleSheet.create({
   uploadButton: {
     flex: 1,
     aspectRatio: 1,
-    borderRadius: 16,
+    borderRadius: radius.lg,
     borderWidth: 2,
     borderStyle: "dashed",
-    borderColor: "#ddd",
+    borderColor: colors.outlineVariant,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fff",
+    backgroundColor: colors.surfaceContainerLowest,
     gap: 8,
   },
   uploadText: {
     fontSize: 13,
-    color: "#888",
+    fontFamily: fonts.bodySemiBold,
+    color: colors.onSurfaceVariant,
     textAlign: "center",
   },
   // Preview
   previewContainer: {
     position: "relative",
-    borderRadius: 16,
+    borderRadius: radius.lg,
     overflow: "hidden",
   },
   preview: {
     width: "100%",
     aspectRatio: 4 / 3,
-    borderRadius: 16,
+    borderRadius: radius.lg,
   },
   closeButton: {
     position: "absolute",
@@ -355,10 +360,15 @@ const styles = StyleSheet.create({
   // Recognize button
   recognizeBtn: {
     marginTop: 16,
-    backgroundColor: "#FF6B6B",
-    borderRadius: 14,
+    backgroundColor: colors.primary,
+    borderRadius: radius.md,
     paddingVertical: 14,
     alignItems: "center",
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 4,
   },
   disabledBtn: {
     opacity: 0.6,
@@ -369,21 +379,21 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   btnText: {
-    color: "#fff",
+    color: colors.onPrimary,
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: fonts.bodyBold,
   },
   // Result card
   resultCard: {
     marginTop: 20,
-    backgroundColor: "#fff",
-    borderRadius: 16,
+    backgroundColor: colors.surfaceContainerLowest,
+    borderRadius: radius.lg,
     padding: 16,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    elevation: 3,
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 2,
   },
   resultHeader: {
     flexDirection: "row",
@@ -392,36 +402,37 @@ const styles = StyleSheet.create({
   },
   dishName: {
     fontSize: 22,
-    fontWeight: "700",
-    color: "#2D2D2D",
+    fontFamily: fonts.displayBold,
+    color: colors.onSurface,
   },
   cuisineTag: {
     marginTop: 6,
     alignSelf: "flex-start",
-    backgroundColor: "#FFF0E0",
+    backgroundColor: colors.tertiaryContainer,
     paddingHorizontal: 10,
     paddingVertical: 4,
-    borderRadius: 12,
+    borderRadius: radius.full,
   },
   cuisineText: {
     fontSize: 12,
-    fontWeight: "600",
-    color: "#E67E22",
+    fontFamily: fonts.bodySemiBold,
+    color: colors.onTertiaryContainer,
   },
   confidenceBadge: {
-    backgroundColor: "#E8F5E9",
+    backgroundColor: colors.secondaryContainer,
     paddingHorizontal: 10,
     paddingVertical: 4,
-    borderRadius: 12,
+    borderRadius: radius.full,
   },
   confidenceText: {
     fontSize: 12,
-    fontWeight: "600",
-    color: "#4CAF50",
+    fontFamily: fonts.bodySemiBold,
+    color: colors.secondary,
   },
   description: {
     fontSize: 14,
-    color: "#888",
+    fontFamily: fonts.body,
+    color: colors.onSurfaceVariant,
     marginTop: 12,
     lineHeight: 20,
   },
@@ -431,7 +442,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: "#f5f5f5",
+    borderTopColor: colors.outlineVariant,
   },
   macroItem: {
     flex: 1,
@@ -439,19 +450,20 @@ const styles = StyleSheet.create({
   },
   macroValue: {
     fontSize: 15,
-    fontWeight: "700",
-    color: "#2D2D2D",
+    fontFamily: fonts.bodyBold,
+    color: colors.onSurface,
   },
   macroLabel: {
     fontSize: 10,
-    color: "#aaa",
+    fontFamily: fonts.body,
+    color: colors.onSurfaceVariant,
     marginTop: 2,
   },
   // Ingredients
   sectionTitle: {
     fontSize: 12,
-    fontWeight: "700",
-    color: "#aaa",
+    fontFamily: fonts.bodyBold,
+    color: colors.onSurfaceVariant,
     textTransform: "uppercase",
     letterSpacing: 1,
     marginTop: 16,
@@ -463,14 +475,15 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   ingredientPill: {
-    backgroundColor: "#f8f4f0",
+    backgroundColor: colors.surfaceContainerHigh,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    borderRadius: 12,
+    borderRadius: radius.full,
   },
   ingredientText: {
     fontSize: 12,
-    color: "#555",
+    fontFamily: fonts.bodyMedium,
+    color: colors.onSurface,
   },
   // Steps
   stepRow: {
@@ -480,13 +493,14 @@ const styles = StyleSheet.create({
   },
   stepNumber: {
     fontSize: 13,
-    fontWeight: "600",
-    color: "#FF6B6B",
+    fontFamily: fonts.bodySemiBold,
+    color: colors.primary,
     minWidth: 18,
   },
   stepText: {
     fontSize: 13,
-    color: "#555",
+    fontFamily: fonts.body,
+    color: colors.onSurface,
     flex: 1,
     lineHeight: 19,
   },
@@ -499,41 +513,46 @@ const styles = StyleSheet.create({
   slotBtn: {
     flex: 1,
     paddingVertical: 10,
-    borderRadius: 10,
-    backgroundColor: "#f5f5f5",
+    borderRadius: radius.md,
+    backgroundColor: colors.surfaceContainerHigh,
     alignItems: "center",
   },
   slotBtnActive: {
-    backgroundColor: "#FF6B6B",
+    backgroundColor: colors.primary,
   },
   slotText: {
     fontSize: 14,
-    fontWeight: "600",
-    color: "#999",
+    fontFamily: fonts.bodySemiBold,
+    color: colors.onSurfaceVariant,
   },
   slotTextActive: {
-    color: "#fff",
+    color: colors.onPrimary,
   },
   // Add button
   addBtn: {
     marginTop: 12,
-    backgroundColor: "#4CAF50",
-    borderRadius: 14,
+    backgroundColor: colors.secondary,
+    borderRadius: radius.md,
     paddingVertical: 14,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 8,
+    shadowColor: colors.secondary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    elevation: 4,
   },
   addBtnText: {
-    color: "#fff",
+    color: colors.onPrimary,
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: fonts.bodyBold,
   },
   addedBanner: {
     marginTop: 12,
-    backgroundColor: "#E8F5E9",
-    borderRadius: 14,
+    backgroundColor: colors.secondaryContainer,
+    borderRadius: radius.md,
     paddingVertical: 14,
     flexDirection: "row",
     alignItems: "center",
@@ -541,8 +560,8 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   addedText: {
-    color: "#4CAF50",
+    color: colors.secondary,
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: fonts.bodySemiBold,
   },
 });

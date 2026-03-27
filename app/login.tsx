@@ -1,19 +1,35 @@
 import React, { useState } from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image,
-  KeyboardAvoidingView, Platform, ScrollView,
+  View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView,
+  KeyboardAvoidingView, Platform, ScrollView, Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, radius, spacing } from '../constants/theme';
+import { useMealStore } from '../store/useMealStore';
 
 export default function LoginScreen() {
   const router = useRouter();
+  const { login } = useMealStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
 
   const handleLogin = () => {
+    if (!email.trim()) {
+      if (Platform.OS === 'web') {
+        window.alert('Please enter your email.');
+      } else {
+        Alert.alert('Missing Info', 'Please enter your email.');
+      }
+      return;
+    }
+    login(email.trim());
+    router.replace('/(tabs)');
+  };
+
+  const handleSocialLogin = () => {
+    login('user@dishdash.app');
     router.replace('/(tabs)');
   };
 
@@ -34,11 +50,10 @@ export default function LoginScreen() {
           </TouchableOpacity>
 
           {/* Logo */}
-          <Image
-            source={require('../assets/icon.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+          <Text style={styles.logoText}>
+            <Text style={styles.logoDish}>Dish</Text>
+            <Text style={styles.logoDash}>Dash</Text>
+          </Text>
 
           <Text style={styles.title}>Welcome Back</Text>
           <Text style={styles.subtitle}>Sign in to continue your culinary journey</Text>
@@ -100,12 +115,12 @@ export default function LoginScreen() {
           </View>
 
           {/* Social buttons */}
-          <TouchableOpacity style={styles.socialBtn} onPress={handleLogin} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.socialBtn} onPress={handleSocialLogin} activeOpacity={0.85}>
             <Ionicons name="logo-google" size={20} color={colors.onSurface} />
             <Text style={styles.socialBtnText}>Continue with Google</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.socialBtn} onPress={handleLogin} activeOpacity={0.85}>
+          <TouchableOpacity style={styles.socialBtn} onPress={handleSocialLogin} activeOpacity={0.85}>
             <Ionicons name="logo-apple" size={20} color={colors.onSurface} />
             <Text style={styles.socialBtnText}>Continue with Apple</Text>
           </TouchableOpacity>
@@ -132,7 +147,9 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
     marginBottom: 20,
   },
-  logo: { height: 48, width: 200, alignSelf: 'center', marginBottom: 24 },
+  logoText: { fontSize: 30, alignSelf: 'center', marginBottom: 24 },
+  logoDish: { fontFamily: fonts.displayBold, color: colors.primary },
+  logoDash: { fontFamily: fonts.displayBold, color: colors.secondary },
   title: {
     fontSize: 28, fontFamily: fonts.display,
     color: colors.onBackground, textAlign: 'center', marginBottom: 6,
