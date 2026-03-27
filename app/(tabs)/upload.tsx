@@ -13,6 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { recognizeDish, type DishResult } from "../../lib/recognizeDish";
 import { useMealStore, type Recipe } from "../../store/useMealStore";
+import SharedHeader from "../../components/SharedHeader";
 
 export default function UploadScreen() {
   const [imageUri, setImageUri] = useState<string | null>(null);
@@ -98,6 +99,7 @@ export default function UploadScreen() {
 
   return (
     <View style={styles.container}>
+      <SharedHeader />
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.title}>Identify Dish</Text>

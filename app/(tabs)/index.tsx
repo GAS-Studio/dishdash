@@ -13,6 +13,7 @@ import {
 import { useRouter } from 'expo-router';
 import { useMealStore, Recipe } from '../../store/useMealStore';
 import RecipeCard from '../../components/RecipeCard';
+import SharedHeader from '../../components/SharedHeader';
 import { colors, fonts, radius } from '../../constants/theme';
 import recipesRaw from '../../data/recipes_lunchdinner.json';
 
@@ -71,20 +72,7 @@ export default function DiscoverScreen() {
     <SafeAreaView style={styles.safe}>
 
       {/* ── Header ── */}
-      <View style={styles.header}>
-        <Image
-          source={require('../../assets/icon.png')}
-          style={styles.headerLogo}
-          resizeMode="contain"
-        />
-        <TouchableOpacity
-          style={styles.planBtn}
-          onPress={() => router.push('/(tabs)/plan')}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.planBtnText}>Today's Plan</Text>
-        </TouchableOpacity>
-      </View>
+      <SharedHeader />
 
       {/* ── Deck ── */}
       {allSwiped ? (
@@ -273,8 +261,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   headerLogo: {
-    height: 32,
-    width: 140,
+    height: 40,
+    width: 180,
   },
   planBtn: {
     backgroundColor: colors.surfaceContainerHigh,

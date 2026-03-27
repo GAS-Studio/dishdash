@@ -19,17 +19,30 @@ export default function RootLayout() {
     PlusJakartaSans_800ExtraBold,
   });
 
+  if (!fontsLoaded) return null;
+
+  const stackContent = (
+    <Stack screenOptions={{ headerShown: false }} initialRouteName="index">
+      <Stack.Screen name="index" />
+      <Stack.Screen name="landing" />
+      <Stack.Screen name="login" />
+      <Stack.Screen name="signup" />
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="feedback" />
+    </Stack>
+  );
+
   if (Platform.OS === 'web') {
     return (
       <View style={styles.webWrapper}>
         <View style={styles.phoneFrame}>
-          <Stack screenOptions={{ headerShown: false }} />
+          {stackContent}
         </View>
       </View>
     );
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return stackContent;
 }
 
 const styles = StyleSheet.create({

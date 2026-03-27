@@ -32,8 +32,8 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: 'rgba(255,248,246,0.96)',
           borderTopWidth: 0,
-          height: Platform.OS === 'ios' ? 82 : Platform.OS === 'web' ? 80 : 66,
-          paddingBottom: Platform.OS === 'ios' ? 22 : Platform.OS === 'web' ? 16 : 8,
+          height: Platform.OS === 'ios' ? 82 : Platform.OS === 'web' ? 80 : 72,
+          paddingBottom: Platform.OS === 'ios' ? 22 : Platform.OS === 'web' ? 16 : 14,
           paddingTop: 8,
           borderTopLeftRadius: 28,
           borderTopRightRadius: 28,
@@ -43,7 +43,7 @@ export default function TabLayout() {
           shadowRadius: 20,
           elevation: 20,
           position: 'absolute',
-          bottom: Platform.OS === 'web' ? 10 : 0,
+          bottom: Platform.OS === 'web' ? 14 : 0,
           left: Platform.OS === 'web' ? 8 : 0,
           right: Platform.OS === 'web' ? 8 : 0,
         },
@@ -79,9 +79,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="browse"
         options={{
-          title: 'Browse',
+          title: 'Feedback',
           tabBarIcon: ({ color, focused }) => (
-            <TabIcon name="search-outline" color={color} focused={focused} />
+            <TabIcon name="chatbubble-ellipses-outline" color={color} focused={focused} />
           ),
         }}
       />

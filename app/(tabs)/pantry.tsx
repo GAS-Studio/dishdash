@@ -1,9 +1,12 @@
 import {
-  View, Text, ScrollView, StyleSheet, TouchableOpacity, FlatList,
+  View, Text, ScrollView, StyleSheet, TouchableOpacity, FlatList, Platform,
 } from 'react-native';
 import { useState } from 'react';
+import { useRouter } from 'expo-router';
 import { useMealStore, Recipe } from '../../store/useMealStore';
 import { INGREDIENT_CATEGORIES } from '../../constants/ingredientCategories';
+import { colors, fonts } from '../../constants/theme';
+import SharedHeader from '../../components/SharedHeader';
 import recipesBreakfast from '../../data/recipes_breakfast.json';
 import recipesLunchDinner from '../../data/recipes_lunchdinner.json';
 
@@ -27,33 +30,37 @@ export default function PantryScreen() {
 
   return (
     <View style={styles.wrapper}>
+      <SharedHeader />
       {!showResults ? (
-        <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-          <Text style={styles.heading}>What's in your pantry?</Text>
-          <Text style={styles.subheading}>Select ingredients you have on hand</Text>
+        <>
+          <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+            <Text style={styles.heading}>What's in your pantry?</Text>
+            <Text style={styles.subheading}>Select ingredients you have on hand</Text>
 
-          {INGREDIENT_CATEGORIES.map((category) => (
-            <View key={category.label} style={styles.section}>
-              <Text style={styles.sectionTitle}>{category.emoji} {category.label}</Text>
-              <View style={styles.chips}>
-                {category.ingredients.map((ing) => {
-                  const selected = pantryIngredients.includes(ing);
-                  return (
-                    <TouchableOpacity
-                      key={ing}
-                      style={[styles.chip, selected && styles.chipSelected]}
-                      onPress={() => togglePantryIngredient(ing)}
-                    >
-                      <Text style={[styles.chipText, selected && styles.chipTextSelected]}>
-                        {ing}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
+            {INGREDIENT_CATEGORIES.map((category) => (
+              <View key={category.label} style={styles.section}>
+                <Text style={styles.sectionTitle}>{category.emoji} {category.label}</Text>
+                <View style={styles.chips}>
+                  {category.ingredients.map((ing) => {
+                    const selected = pantryIngredients.includes(ing);
+                    return (
+                      <TouchableOpacity
+                        key={ing}
+                        style={[styles.chip, selected && styles.chipSelected]}
+                        onPress={() => togglePantryIngredient(ing)}
+                      >
+                        <Text style={[styles.chipText, selected && styles.chipTextSelected]}>
+                          {ing}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
               </View>
-            </View>
-          ))}
+            ))}
+          </ScrollView>
 
+          {/* Fixed bottom bar — outside ScrollView so content scrolls freely behind it */}
           <View style={styles.bottomBar}>
             {pantryIngredients.length > 0 && (
               <TouchableOpacity style={styles.clearBtn} onPress={clearPantry}>
@@ -70,7 +77,7 @@ export default function PantryScreen() {
               </Text>
             </TouchableOpacity>
           </View>
-        </ScrollView>
+        </>
       ) : (
         <View style={styles.container}>
           <View style={styles.resultsHeader}>
@@ -112,8 +119,15 @@ function RecipeResultCard({
   matches: number;
   total: number;
 }) {
+  const router = useRouter();
   const { setLunch, setDinner, lunch, dinner } = useMealStore();
   const addedAs = lunch?.id === recipe.id ? 'lunch' : dinner?.id === recipe.id ? 'dinner' : null;
+
+  const handleAdd = (slot: 'lunch' | 'dinner') => {
+    if (slot === 'lunch') setLunch(recipe);
+    else setDinner(recipe);
+    router.push('/(tabs)/plan');
+  };
 
   return (
     <View style={styles.resultCard}>
@@ -138,10 +152,10 @@ function RecipeResultCard({
         <Text style={styles.addedLabel}>✓ Added as {addedAs}</Text>
       ) : (
         <View style={styles.addButtons}>
-          <TouchableOpacity style={styles.addBtn} onPress={() => setLunch(recipe)}>
+          <TouchableOpacity style={styles.addBtn} onPress={() => handleAdd('lunch')}>
             <Text style={styles.addBtnText}>+ Lunch</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.addBtn, styles.addBtnDinner]} onPress={() => setDinner(recipe)}>
+          <TouchableOpacity style={[styles.addBtn, styles.addBtnDinner]} onPress={() => handleAdd('dinner')}>
             <Text style={styles.addBtnText}>+ Dinner</Text>
           </TouchableOpacity>
         </View>
@@ -150,26 +164,35 @@ function RecipeResultCard({
   );
 }
 
+const TAB_BAR_HEIGHT = Platform.OS === 'ios' ? 82 : 72;
+const BOTTOM_BAR_HEIGHT = 64;
+
 const styles = StyleSheet.create({
-  wrapper: { flex: 1, backgroundColor: '#FFF8F0' },
+  wrapper: { flex: 1, backgroundColor: colors.background },
   container: { flex: 1 },
-  content: { padding: 20, paddingTop: 60, paddingBottom: 120 },
+  content: {
+    padding: 20,
+    paddingTop: 16,
+    // Enough space to scroll past the fixed bottomBar + tab bar
+    paddingBottom: TAB_BAR_HEIGHT + BOTTOM_BAR_HEIGHT + 40,
+  },
   heading: {
     fontSize: 26,
-    fontWeight: '700',
-    color: '#FF6B6B',
+    fontFamily: fonts.displayBold,
+    color: colors.primary,
     marginBottom: 4,
   },
   subheading: {
     fontSize: 14,
-    color: '#888',
+    fontFamily: fonts.body,
+    color: colors.onSurfaceVariant,
     marginBottom: 24,
   },
   section: { marginBottom: 24 },
   sectionTitle: {
     fontSize: 15,
-    fontWeight: '700',
-    color: '#333',
+    fontFamily: fonts.bodyBold,
+    color: colors.onSurface,
     marginBottom: 10,
   },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
@@ -177,55 +200,55 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: colors.surfaceContainerLowest,
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderColor: colors.outlineVariant,
   },
   chipSelected: {
-    backgroundColor: '#FF6B6B',
-    borderColor: '#FF6B6B',
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
   },
-  chipText: { fontSize: 13, color: '#555' },
-  chipTextSelected: { color: '#fff', fontWeight: '600' },
+  chipText: { fontSize: 13, fontFamily: fonts.bodyMedium, color: colors.onSurfaceVariant },
+  chipTextSelected: { color: colors.onPrimary, fontFamily: fonts.bodySemiBold },
   bottomBar: {
     position: 'absolute',
-    bottom: 80,
+    bottom: TAB_BAR_HEIGHT,
     left: 0,
     right: 0,
     flexDirection: 'row',
     gap: 10,
-    padding: 20,
-    paddingBottom: 16,
-    backgroundColor: '#FFF8F0',
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    backgroundColor: colors.background,
     borderTopWidth: 1,
-    borderTopColor: '#F0E8E0',
+    borderTopColor: colors.outlineVariant,
   },
   clearBtn: {
     paddingHorizontal: 20,
     paddingVertical: 14,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#FF6B6B',
+    borderColor: colors.primary,
   },
-  clearBtnText: { color: '#FF6B6B', fontWeight: '600', fontSize: 15 },
+  clearBtnText: { color: colors.primary, fontFamily: fonts.bodySemiBold, fontSize: 15 },
   findBtn: {
     flex: 1,
-    backgroundColor: '#FF6B6B',
+    backgroundColor: colors.primary,
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
   },
-  findBtnDisabled: { backgroundColor: '#FFBBBB' },
-  findBtnText: { color: '#fff', fontWeight: '700', fontSize: 15 },
-  resultsHeader: { paddingHorizontal: 20, paddingTop: 60, paddingBottom: 16 },
-  backBtn: { color: '#FF6B6B', fontWeight: '600', fontSize: 15, marginBottom: 12 },
+  findBtnDisabled: { backgroundColor: colors.primaryContainer },
+  findBtnText: { color: colors.onPrimary, fontFamily: fonts.bodyBold, fontSize: 15 },
+  resultsHeader: { paddingHorizontal: 20, paddingTop: 16, paddingBottom: 16 },
+  backBtn: { color: colors.primary, fontFamily: fonts.bodySemiBold, fontSize: 15, marginBottom: 12 },
   emptyState: { alignItems: 'center', marginTop: 80 },
   emptyIcon: { fontSize: 48, marginBottom: 12 },
-  emptyText: { fontSize: 18, fontWeight: '600', color: '#444', marginBottom: 6 },
-  emptySubtext: { fontSize: 14, color: '#888' },
-  resultsList: { paddingHorizontal: 20, paddingBottom: 40 },
+  emptyText: { fontSize: 18, fontFamily: fonts.bodySemiBold, color: colors.onSurface, marginBottom: 6 },
+  emptySubtext: { fontSize: 14, fontFamily: fonts.body, color: colors.onSurfaceVariant },
+  resultsList: { paddingHorizontal: 20, paddingBottom: TAB_BAR_HEIGHT + 20 },
   resultCard: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.surfaceContainerLowest,
     borderRadius: 14,
     padding: 16,
     marginBottom: 12,
@@ -236,28 +259,28 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   resultCardTop: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 10 },
-  resultName: { fontSize: 16, fontWeight: '700', color: '#222', marginBottom: 4 },
-  resultMeta: { fontSize: 12, color: '#888' },
+  resultName: { fontSize: 16, fontFamily: fonts.bodyBold, color: colors.onSurface, marginBottom: 4 },
+  resultMeta: { fontSize: 12, fontFamily: fonts.body, color: colors.onSurfaceVariant },
   matchBadge: { alignItems: 'center', marginLeft: 12 },
-  matchBadgeText: { fontSize: 18, fontWeight: '800', color: '#FF6B6B' },
-  matchBadgeLabel: { fontSize: 10, color: '#888' },
+  matchBadgeText: { fontSize: 18, fontFamily: fonts.display, color: colors.primary },
+  matchBadgeLabel: { fontSize: 10, fontFamily: fonts.body, color: colors.onSurfaceVariant },
   matchBar: {
     height: 4,
-    backgroundColor: '#F0F0F0',
+    backgroundColor: colors.surfaceContainerHigh,
     borderRadius: 2,
     marginBottom: 12,
     overflow: 'hidden',
   },
-  matchBarFill: { height: 4, backgroundColor: '#FF6B6B', borderRadius: 2 },
+  matchBarFill: { height: 4, backgroundColor: colors.primary, borderRadius: 2 },
   addButtons: { flexDirection: 'row', gap: 8 },
   addBtn: {
     flex: 1,
-    backgroundColor: '#FF6B6B',
+    backgroundColor: colors.primary,
     borderRadius: 8,
     paddingVertical: 8,
     alignItems: 'center',
   },
-  addBtnDinner: { backgroundColor: '#FF9A3C' },
-  addBtnText: { color: '#fff', fontWeight: '600', fontSize: 13 },
-  addedLabel: { fontSize: 13, color: '#4CAF50', fontWeight: '600' },
+  addBtnDinner: { backgroundColor: colors.tertiary },
+  addBtnText: { color: colors.onPrimary, fontFamily: fonts.bodySemiBold, fontSize: 13 },
+  addedLabel: { fontSize: 13, fontFamily: fonts.bodySemiBold, color: colors.secondary },
 });

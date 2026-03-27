@@ -1,5 +1,7 @@
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { useMealStore, Recipe } from '../../store/useMealStore';
+import { colors, fonts, radius } from '../../constants/theme';
+import SharedHeader from '../../components/SharedHeader';
 
 export default function TodaysPlanScreen() {
   const { lunch, dinner, clearPlan } = useMealStore();
@@ -7,8 +9,10 @@ export default function TodaysPlanScreen() {
   const isEmpty = !lunch && !dinner;
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.heading}>Today's Plan</Text>
+    <View style={styles.wrapper}>
+      <SharedHeader />
+      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+        <Text style={styles.heading}>Today's Plan</Text>
 
       {isEmpty ? (
         <View style={styles.emptyState}>
@@ -26,7 +30,8 @@ export default function TodaysPlanScreen() {
           </TouchableOpacity>
         </>
       )}
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -86,20 +91,25 @@ function MacroItem({ label, value }: { label: string; value: string | number }) 
   );
 }
 
+const TAB_BAR_HEIGHT = Platform.OS === 'ios' ? 82 : 72;
+
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#FFF8F0',
   },
   content: {
     padding: 20,
-    paddingTop: 60,
-    paddingBottom: 40,
+    paddingTop: 16,
+    paddingBottom: TAB_BAR_HEIGHT + 40,
   },
   heading: {
     fontSize: 28,
-    fontWeight: '700',
-    color: '#FF6B6B',
+    fontFamily: fonts.displayBold,
+    color: colors.primary,
     marginBottom: 24,
   },
   emptyState: {
@@ -112,18 +122,19 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#444',
+    fontFamily: fonts.bodySemiBold,
+    color: colors.onSurface,
     marginBottom: 8,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#888',
+    fontFamily: fonts.body,
+    color: colors.onSurfaceVariant,
     textAlign: 'center',
   },
   card: {
-    backgroundColor: '#fff',
-    borderRadius: 16,
+    backgroundColor: colors.surfaceContainerLowest,
+    borderRadius: radius.lg,
     padding: 20,
     marginBottom: 16,
     shadowColor: '#000',
@@ -134,16 +145,16 @@ const styles = StyleSheet.create({
   },
   mealLabel: {
     fontSize: 12,
-    fontWeight: '700',
-    color: '#FF6B6B',
+    fontFamily: fonts.bodyBold,
+    color: colors.primary,
     textTransform: 'uppercase',
     letterSpacing: 1.2,
     marginBottom: 6,
   },
   recipeName: {
     fontSize: 20,
-    fontWeight: '700',
-    color: '#222',
+    fontFamily: fonts.bodyBold,
+    color: colors.onSurface,
     marginBottom: 10,
   },
   tags: {
@@ -153,15 +164,15 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   tag: {
-    backgroundColor: '#FFF0E0',
+    backgroundColor: colors.primaryContainer,
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 4,
   },
   tagText: {
     fontSize: 12,
-    color: '#FF6B6B',
-    fontWeight: '500',
+    fontFamily: fonts.bodyMedium,
+    color: colors.primary,
   },
   metaRow: {
     flexDirection: 'row',
@@ -169,20 +180,21 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   pill: {
-    backgroundColor: '#F5F5F5',
+    backgroundColor: colors.surfaceContainer,
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 4,
   },
   pillText: {
     fontSize: 12,
-    color: '#555',
+    fontFamily: fonts.body,
+    color: colors.onSurfaceVariant,
   },
   macrosRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#FFF8F0',
-    borderRadius: 12,
+    backgroundColor: colors.surfaceContainerLow,
+    borderRadius: radius.sm,
     padding: 12,
     marginBottom: 12,
   },
@@ -191,36 +203,39 @@ const styles = StyleSheet.create({
   },
   macroValue: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#222',
+    fontFamily: fonts.bodyBold,
+    color: colors.onSurface,
   },
   macroLabel: {
     fontSize: 11,
-    color: '#888',
+    fontFamily: fonts.body,
+    color: colors.onSurfaceVariant,
     marginTop: 2,
   },
   description: {
     fontSize: 13,
-    color: '#666',
+    fontFamily: fonts.body,
+    color: colors.onSurfaceVariant,
     lineHeight: 20,
     fontStyle: 'italic',
   },
   emptyCardText: {
     fontSize: 14,
-    color: '#aaa',
+    fontFamily: fonts.body,
+    color: colors.outlineVariant,
     fontStyle: 'italic',
     marginTop: 4,
   },
   clearButton: {
     marginTop: 8,
-    backgroundColor: '#FF6B6B',
-    borderRadius: 12,
+    backgroundColor: colors.primary,
+    borderRadius: radius.md,
     paddingVertical: 14,
     alignItems: 'center',
   },
   clearButtonText: {
-    color: '#fff',
-    fontWeight: '700',
+    color: colors.onPrimary,
+    fontFamily: fonts.bodyBold,
     fontSize: 16,
   },
 });
