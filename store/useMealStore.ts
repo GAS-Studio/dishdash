@@ -1,6 +1,5 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
 
 export type Ingredient = {
   name: string;
@@ -69,65 +68,99 @@ type MealStore = {
   submitFeedback: (rating: number, categories: string[], text: string) => void;
 };
 
-export const useMealStore = create<MealStore>()(
-  persist(
-    (set) => ({
-      // User auth
-      user: null,
-      isLoggedIn: false,
-      signUp: (name, email) =>
-        set({ user: { name, email }, isLoggedIn: true }),
-      login: (email) =>
-        set((state) => ({
-          user: { name: state.user?.name || email.split('@')[0], email },
-          isLoggedIn: true,
-        })),
-      logout: () => set({ user: null, isLoggedIn: false }),
+// ─── Manual persistence helpers (web only) ───
+const STORAGE_KEY = 'dishdash-storage';
 
-      // Today's Plan
-      lunch: null,
-      dinner: null,
-      setLunch: (recipe) => set({ lunch: recipe }),
-      setDinner: (recipe) => set({ dinner: recipe }),
-      clearPlan: () => set({ lunch: null, dinner: null }),
+function loadPersistedState(): Partial<MealStore> {
+  if (Platform.OS !== 'web') return {};
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw);
+  } catch {
+    return {};
+  }
+}
 
-      // Pantry filter
-      pantryIngredients: [],
-      togglePantryIngredient: (ingredient) =>
-        set((state) => ({
-          pantryIngredients: state.pantryIngredients.includes(ingredient)
-            ? state.pantryIngredients.filter((i) => i !== ingredient)
-            : [...state.pantryIngredients, ingredient],
-        })),
-      clearPantry: () => set({ pantryIngredients: [] }),
+function saveState(state: MealStore) {
+  if (Platform.OS !== 'web') return;
+  try {
+    const data = {
+      user: state.user,
+      isLoggedIn: state.isLoggedIn,
+      lunch: state.lunch,
+      dinner: state.dinner,
+      feedbackHistory: state.feedbackHistory,
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    // ignore write errors
+  }
+}
 
-      // Feedback
-      feedbackHistory: [],
-      submitFeedback: (rating, categories, text) =>
-        set((state) => ({
-          feedbackHistory: [
-            ...state.feedbackHistory,
-            {
-              id: `fb-${Date.now()}`,
-              rating,
-              categories,
-              text,
-              timestamp: Date.now(),
-            },
-          ],
-        })),
-    }),
-    {
-      name: 'dishdash-storage',
-      storage: createJSONStorage(() => AsyncStorage),
-      // Only persist user auth and feedback — not transient UI state like pantry selections
-      partialize: (state) => ({
-        user: state.user,
-        isLoggedIn: state.isLoggedIn,
-        lunch: state.lunch,
-        dinner: state.dinner,
-        feedbackHistory: state.feedbackHistory,
-      }),
-    }
-  )
-);
+const persisted = loadPersistedState();
+
+export const useMealStore = create<MealStore>()((set, get) => ({
+  // User auth
+  user: (persisted.user as User | null) ?? null,
+  isLoggedIn: persisted.isLoggedIn ?? false,
+  signUp: (name, email) => {
+    set({ user: { name, email }, isLoggedIn: true });
+    saveState(get());
+  },
+  login: (email) => {
+    set((state) => ({
+      user: { name: state.user?.name || email.split('@')[0], email },
+      isLoggedIn: true,
+    }));
+    saveState(get());
+  },
+  logout: () => {
+    set({ user: null, isLoggedIn: false });
+    saveState(get());
+  },
+
+  // Today's Plan
+  lunch: (persisted.lunch as Recipe | null) ?? null,
+  dinner: (persisted.dinner as Recipe | null) ?? null,
+  setLunch: (recipe) => {
+    set({ lunch: recipe });
+    saveState(get());
+  },
+  setDinner: (recipe) => {
+    set({ dinner: recipe });
+    saveState(get());
+  },
+  clearPlan: () => {
+    set({ lunch: null, dinner: null });
+    saveState(get());
+  },
+
+  // Pantry filter (not persisted)
+  pantryIngredients: [],
+  togglePantryIngredient: (ingredient) =>
+    set((state) => ({
+      pantryIngredients: state.pantryIngredients.includes(ingredient)
+        ? state.pantryIngredients.filter((i) => i !== ingredient)
+        : [...state.pantryIngredients, ingredient],
+    })),
+  clearPantry: () => set({ pantryIngredients: [] }),
+
+  // Feedback
+  feedbackHistory: (persisted.feedbackHistory as FeedbackEntry[]) ?? [],
+  submitFeedback: (rating, categories, text) => {
+    set((state) => ({
+      feedbackHistory: [
+        ...state.feedbackHistory,
+        {
+          id: `fb-${Date.now()}`,
+          rating,
+          categories,
+          text,
+          timestamp: Date.now(),
+        },
+      ],
+    }));
+    saveState(get());
+  },
+}));
