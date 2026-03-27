@@ -1,6 +1,21 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { persist, createJSONStorage, StateStorage } from 'zustand/middleware';
+
+// Simple localStorage-based storage (works for web, and RN has localStorage polyfill)
+const storage: StateStorage = {
+  getItem: (name: string): string | null => {
+    if (typeof localStorage === 'undefined') return null;
+    return localStorage.getItem(name);
+  },
+  setItem: (name: string, value: string): void => {
+    if (typeof localStorage === 'undefined') return;
+    localStorage.setItem(name, value);
+  },
+  removeItem: (name: string): void => {
+    if (typeof localStorage === 'undefined') return;
+    localStorage.removeItem(name);
+  },
+};
 
 export type Ingredient = {
   name: string;
@@ -119,7 +134,7 @@ export const useMealStore = create<MealStore>()(
     }),
     {
       name: 'dishdash-storage',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => storage),
       // Only persist user auth and feedback — not transient UI state like pantry selections
       partialize: (state) => ({
         user: state.user,
