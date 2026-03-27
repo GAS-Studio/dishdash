@@ -12,6 +12,7 @@
     "@anthropic-ai/sdk": "^0.80.0",
     "@expo-google-fonts/dm-sans": "^0.4.2",
     "@expo-google-fonts/playfair-display": "^0.4.2",
+    "@expo-google-fonts/plus-jakarta-sans": "^0.4.2",
     "@expo/metro-runtime": "~55.0.6",
     "@types/react": "~19.2.10",
     "expo": "~55.0.8",

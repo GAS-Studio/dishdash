@@ -46,15 +46,14 @@ export const colors = {
 };
 
 // ── Typography ──
-// Display/heading: Playfair Display (serif, editorial)
-// Body/UI: DM Sans (clean, modern sans-serif)
+// Plus Jakarta Sans — matches Stitch "Modern Gourmet" design
 export const fonts = {
-  display: 'PlayfairDisplay_800ExtraBold',
-  displayBold: 'PlayfairDisplay_700Bold',
-  body: 'DMSans_400Regular',
-  bodyMedium: 'DMSans_500Medium',
-  bodySemiBold: 'DMSans_600SemiBold',
-  bodyBold: 'DMSans_700Bold',
+  display: 'PlusJakartaSans_800ExtraBold',
+  displayBold: 'PlusJakartaSans_700Bold',
+  body: 'PlusJakartaSans_400Regular',
+  bodyMedium: 'PlusJakartaSans_500Medium',
+  bodySemiBold: 'PlusJakartaSans_600SemiBold',
+  bodyBold: 'PlusJakartaSans_700Bold',
 };
 
 export const spacing = {

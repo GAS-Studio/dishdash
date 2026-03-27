@@ -76,13 +76,11 @@ export default function RecipeCard({ recipe, onSelect, onSkip }: Props) {
           )}
         </View>
 
-        {/* Macros */}
+        {/* Macros — 3-col bento matching Stitch design */}
         <View style={styles.macrosRow}>
-          <MacroBox label="Cal" value={String(recipe.macros.calories)} color={colors.primary} />
-          <MacroBox label="Protein"  value={`${recipe.macros.protein}g`} color="#8A9A5B" />
-          <MacroBox label="Carbs"    value={`${recipe.macros.carbs}g`} color="#F4C430" />
-          <MacroBox label="Fats"     value={`${recipe.macros.fats}g`} color="#E2725B" />
-          <MacroBox label="Fibre"    value={`${recipe.macros.fibre}g`} color="#956E60" />
+          <MacroBox label="Calories" value={String(recipe.macros.calories)} />
+          <MacroBox label="Protein"  value={`${recipe.macros.protein}g`} />
+          <MacroBox label="Carbs"    value={`${recipe.macros.carbs}g`} />
         </View>
 
         {/* Skip / Select buttons */}
@@ -114,12 +112,11 @@ export default function RecipeCard({ recipe, onSelect, onSkip }: Props) {
   );
 }
 
-function MacroBox({ label, value, color }: { label: string; value: string; color: string }) {
+function MacroBox({ label, value }: { label: string; value: string }) {
   return (
     <View style={styles.macroBox}>
-      <View style={[styles.macroDot, { backgroundColor: color }]} />
+      <Text style={styles.macroLabel}>{label.toUpperCase()}</Text>
       <Text style={styles.macroValue}>{value}</Text>
-      <Text style={styles.macroLabel}>{label}</Text>
     </View>
   );
 }
@@ -253,35 +250,32 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
 
-  // ── Macros ──
+  // ── Macros — 3-col bento matching Stitch ──
   macrosRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: colors.surfaceContainerLow,
-    borderRadius: radius.md,
-    paddingVertical: 12,
-    paddingHorizontal: 8,
+    gap: 8,
   },
   macroBox: {
     flex: 1,
+    backgroundColor: colors.surfaceContainerLow,
+    borderRadius: radius.sm,
+    paddingVertical: 10,
+    paddingHorizontal: 6,
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 2,
-  },
-  macroDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-  },
-  macroValue: {
-    fontSize: 15,
-    fontFamily: fonts.bodyBold,
-    color: colors.onSurface,
   },
   macroLabel: {
     fontSize: 9,
     fontFamily: fonts.bodySemiBold,
     color: colors.onSurfaceVariant,
-    letterSpacing: 0.3,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+  },
+  macroValue: {
+    fontSize: 16,
+    fontFamily: fonts.display,
+    color: colors.onSurface,
   },
 
   // ── Action buttons ──
