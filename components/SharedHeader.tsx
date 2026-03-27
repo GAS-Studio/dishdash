@@ -11,7 +11,7 @@ export default function SharedHeader() {
 
   return (
     <View style={styles.header}>
-      <TouchableOpacity onPress={() => router.push('/landing')} activeOpacity={0.8}>
+      <TouchableOpacity onPress={() => router.push('/(tabs)')} activeOpacity={0.8}>
         <Text style={styles.logoText}>
           <Text style={styles.logoDish}>Dish</Text>
           <Text style={styles.logoDash}>Dash</Text>
