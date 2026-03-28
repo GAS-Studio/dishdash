@@ -2,6 +2,7 @@ import {
   View, Text, ScrollView, StyleSheet, TouchableOpacity,
   Platform, Alert, ActivityIndicator,
 } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useMealPlan } from '../../hooks/useMealPlan';
 import type { Recipe } from '../../store/useMealStore';
 import { colors, fonts, radius } from '../../constants/theme';
@@ -63,8 +64,13 @@ export default function TodaysPlanScreen() {
 }
 
 function MealCard({ label, recipe }: { label: string; recipe: Recipe | null }) {
+  const router = useRouter();
+  const Wrapper = recipe ? TouchableOpacity : View;
   return (
-    <View style={styles.card}>
+    <Wrapper
+      style={styles.card}
+      {...(recipe ? { onPress: () => router.push({ pathname: '/recipe/[id]', params: { id: recipe.id } }), activeOpacity: 0.75 } : {})}
+    >
       <Text style={styles.mealLabel}>{label}</Text>
       {recipe ? (
         <>
@@ -96,7 +102,7 @@ function MealCard({ label, recipe }: { label: string; recipe: Recipe | null }) {
           Not set — swipe right to pick a {label.toLowerCase()}.
         </Text>
       )}
-    </View>
+    </Wrapper>
   );
 }
 
