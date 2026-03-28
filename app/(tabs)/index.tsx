@@ -29,17 +29,19 @@ if (Platform.OS !== 'web') {
 export default function DiscoverScreen() {
   const swiperRef = useRef<any>(null);
   const router = useRouter();
-  const { lunch, dinner, setLunch, setDinner } = useMealStore();
+  const { breakfast, lunch, dinner, setBreakfast, setLunch, setDinner } = useMealStore();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [allSwiped, setAllSwiped] = useState(false);
   const [showMealModal, setShowMealModal] = useState(false);
   const [pendingRecipe, setPendingRecipe] = useState<{ recipe: Recipe; index: number } | null>(null);
 
-  const confirmMealSlot = (slot: 'Lunch' | 'Dinner') => {
+  const confirmMealSlot = (slot: 'Breakfast' | 'Lunch' | 'Dinner') => {
     if (!pendingRecipe) return;
     const { recipe, index } = pendingRecipe;
 
-    if (slot === 'Lunch') {
+    if (slot === 'Breakfast') {
+      setBreakfast(recipe);
+    } else if (slot === 'Lunch') {
       setLunch(recipe);
     } else {
       setDinner(recipe);
@@ -209,6 +211,14 @@ export default function DiscoverScreen() {
             </Text>
             <View style={styles.modalButtons}>
               <TouchableOpacity
+                style={[styles.modalBtn, styles.breakfastBtn]}
+                onPress={() => confirmMealSlot('Breakfast')}
+                activeOpacity={0.8}
+              >
+                <Text style={styles.modalBtnEmoji}>🌅</Text>
+                <Text style={styles.modalBtnText}>Breakfast</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
                 style={[styles.modalBtn, styles.lunchBtn]}
                 onPress={() => confirmMealSlot('Lunch')}
                 activeOpacity={0.8}
@@ -342,6 +352,9 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     gap: 4,
+  },
+  breakfastBtn: {
+    backgroundColor: '#E8F5E9',
   },
   lunchBtn: {
     backgroundColor: '#FFF3E0',

@@ -59,8 +59,10 @@ export type FeedbackEntry = {
 
 type MealStore = {
   // Today's Plan (synced to Supabase when logged in)
+  breakfast: Recipe | null;
   lunch: Recipe | null;
   dinner: Recipe | null;
+  setBreakfast: (recipe: Recipe | null) => void;
   setLunch: (recipe: Recipe | null) => void;
   setDinner: (recipe: Recipe | null) => void;
   clearPlan: () => void;
@@ -79,11 +81,13 @@ export const useMealStore = create<MealStore>()(
   persist(
     (set) => ({
       // Today's Plan
+      breakfast: null,
       lunch: null,
       dinner: null,
+      setBreakfast: (recipe) => set({ breakfast: recipe }),
       setLunch: (recipe) => set({ lunch: recipe }),
       setDinner: (recipe) => set({ dinner: recipe }),
-      clearPlan: () => set({ lunch: null, dinner: null }),
+      clearPlan: () => set({ breakfast: null, lunch: null, dinner: null }),
 
       // Pantry filter
       pantryIngredients: [],
@@ -116,6 +120,7 @@ export const useMealStore = create<MealStore>()(
       storage: createJSONStorage(() => storage),
       // Persist meal plans and feedback - pantry is transient UI state
       partialize: (state) => ({
+        breakfast: state.breakfast,
         lunch: state.lunch,
         dinner: state.dinner,
         feedbackHistory: state.feedbackHistory,

@@ -4,16 +4,16 @@ import { colors, fonts, radius } from '../../constants/theme';
 import SharedHeader from '../../components/SharedHeader';
 
 export default function TodaysPlanScreen() {
-  const { lunch, dinner, clearPlan } = useMealStore();
+  const { breakfast, lunch, dinner, clearPlan } = useMealStore();
 
   const handleClearPlan = () => {
     if (Platform.OS === 'web') {
-      const confirmed = window.confirm('Clear Plan?\n\nThis will remove both your lunch and dinner selections.');
+      const confirmed = window.confirm('Clear Plan?\n\nThis will remove all your meal selections.');
       if (confirmed) clearPlan();
     } else {
       Alert.alert(
         'Clear Plan?',
-        'This will remove both your lunch and dinner selections.',
+        'This will remove all your meal selections.',
         [
           { text: 'Cancel', style: 'cancel' },
           { text: 'Clear', style: 'destructive', onPress: clearPlan },
@@ -22,7 +22,7 @@ export default function TodaysPlanScreen() {
     }
   };
 
-  const isEmpty = !lunch && !dinner;
+  const isEmpty = !breakfast && !lunch && !dinner;
 
   return (
     <View style={styles.wrapper}>
@@ -38,6 +38,7 @@ export default function TodaysPlanScreen() {
         </View>
       ) : (
         <>
+          <MealCard label="Breakfast" recipe={breakfast} />
           <MealCard label="Lunch" recipe={lunch} />
           <MealCard label="Dinner" recipe={dinner} />
 
