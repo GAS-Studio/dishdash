@@ -22,7 +22,7 @@ const ALL_RECIPES = [...(lunchDinnerData as Recipe[]), ...(breakfastData as Reci
 export default function RecipeDetailScreen() {
   const { id, slot } = useLocalSearchParams<{ id: string; slot?: string }>();
   const router = useRouter();
-  const { setLunch, setDinner } = useMealStore();
+  const { setBreakfast, setLunch, setDinner } = useMealStore();
 
   const recipe = useMemo(
     () => ALL_RECIPES.find((r) => r.id === id) ?? null,
@@ -44,13 +44,11 @@ export default function RecipeDetailScreen() {
     const hour = new Date().getHours();
     let mealSlot = slot;
     if (!mealSlot) {
-      mealSlot = hour < 15 ? 'Lunch' : 'Dinner';
+      mealSlot = hour < 11 ? 'Breakfast' : hour < 15 ? 'Lunch' : 'Dinner';
     }
-    if (mealSlot === 'Lunch') {
-      setLunch(recipe);
-    } else {
-      setDinner(recipe);
-    }
+    if (mealSlot === 'Breakfast') setBreakfast(recipe);
+    else if (mealSlot === 'Lunch') setLunch(recipe);
+    else setDinner(recipe);
     router.replace('/(tabs)/plan');
   };
 
@@ -73,7 +71,7 @@ export default function RecipeDetailScreen() {
           )}
 
           {/* Back button */}
-          <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.backBtn} onPress={() => router.replace('/(tabs)')} activeOpacity={0.8}>
             <Ionicons name="arrow-back" size={20} color={colors.onSurface} />
           </TouchableOpacity>
 

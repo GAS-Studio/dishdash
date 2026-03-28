@@ -1,14 +1,22 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import {
   View, Text, ScrollView, TouchableOpacity, StyleSheet, SafeAreaView, Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, fonts, radius, spacing } from '../constants/theme';
+import { useAuth } from '../hooks/useAuth';
 
 export default function LandingScreen() {
   const router = useRouter();
   const scrollRef = useRef<ScrollView>(null);
+  const { isLoggedIn, loading } = useAuth();
+
+  useEffect(() => {
+    if (!loading && isLoggedIn) {
+      router.replace('/(tabs)');
+    }
+  }, [isLoggedIn, loading]);
 
   return (
     <SafeAreaView style={styles.safe}>

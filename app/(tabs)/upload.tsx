@@ -27,14 +27,16 @@ export default function UploadScreen() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<DishResult | null>(null);
   const [added, setAdded] = useState(false);
-  const [mealSlot, setMealSlot] = useState<"lunch" | "dinner">(
-    new Date().getHours() < 15 ? "lunch" : "dinner"
+  const [savedToDb, setSavedToDb] = useState(false);
+  const [mealSlot, setMealSlot] = useState<"breakfast" | "lunch" | "dinner">(
+    new Date().getHours() < 11 ? "breakfast" : new Date().getHours() < 15 ? "lunch" : "dinner"
   );
-  const { setLunch, setDinner } = useMealStore();
+  const { setBreakfast, setLunch, setDinner, addCustomRecipe } = useMealStore();
 
   const pickImage = async (useCamera: boolean) => {
     setResult(null);
     setAdded(false);
+    setSavedToDb(false);
     setImageBase64(null);
 
     const options: ImagePicker.ImagePickerOptions = {
@@ -71,40 +73,37 @@ export default function UploadScreen() {
     }
   };
 
+  const buildRecipe = (): Recipe => ({
+    id: `ai-${Date.now()}`,
+    name: result!.name,
+    mealType: mealSlot,
+    cuisineTag: [result!.cuisine],
+    prepTime: result!.prepTime,
+    cookTime: result!.cookTime,
+    servings: 4,
+    difficulty: result!.difficulty,
+    chefInspiration: "AI Recognized",
+    description: result!.description,
+    ingredients: result!.ingredients.map((name) => ({ name, quantity: "", unit: "" })),
+    steps: result!.steps,
+    macros: result!.macros,
+    imageUrl: imageUri || "",
+  });
+
   const handleAddToPlan = () => {
     if (!result) return;
-
-    const recipe: Recipe = {
-      id: `ai-${Date.now()}`,
-      name: result.name,
-      mealType: "lunch/dinner",
-      cuisineTag: [result.cuisine],
-      prepTime: result.prepTime,
-      cookTime: result.cookTime,
-      servings: 4,
-      difficulty: result.difficulty,
-      chefInspiration: "AI Recognized",
-      description: result.description,
-      ingredients: result.ingredients.map((name) => ({
-        name,
-        quantity: "",
-        unit: "",
-      })),
-      steps: result.steps,
-      macros: result.macros,
-      imageUrl: imageUri || "",
-    };
-
-    if (mealSlot === "lunch") {
-      setLunch(recipe);
-    } else {
-      setDinner(recipe);
-    }
+    const recipe = buildRecipe();
+    if (mealSlot === "breakfast") setBreakfast(recipe);
+    else if (mealSlot === "lunch") setLunch(recipe);
+    else setDinner(recipe);
     setAdded(true);
-    // Navigate to plan after a brief moment so user sees confirmation
-    setTimeout(() => {
-      router.push("/(tabs)/plan");
-    }, 600);
+    setTimeout(() => router.push("/(tabs)/plan"), 600);
+  };
+
+  const handleAddToDatabase = () => {
+    if (!result) return;
+    addCustomRecipe(buildRecipe());
+    setSavedToDb(true);
   };
 
   return (
@@ -151,6 +150,7 @@ export default function UploadScreen() {
                 setImageBase64(null);
                 setResult(null);
                 setAdded(false);
+                setSavedToDb(false);
               }}
             >
               <Ionicons name="close" size={20} color="#fff" />
@@ -239,44 +239,45 @@ export default function UploadScreen() {
 
             {/* Meal Slot Selector */}
             <View style={styles.slotRow}>
-              {(["lunch", "dinner"] as const).map((slot) => (
+              {(["breakfast", "lunch", "dinner"] as const).map((slot) => (
                 <TouchableOpacity
                   key={slot}
-                  style={[
-                    styles.slotBtn,
-                    mealSlot === slot && styles.slotBtnActive,
-                  ]}
+                  style={[styles.slotBtn, mealSlot === slot && styles.slotBtnActive]}
                   onPress={() => setMealSlot(slot)}
                 >
-                  <Text
-                    style={[
-                      styles.slotText,
-                      mealSlot === slot && styles.slotTextActive,
-                    ]}
-                  >
+                  <Text style={[styles.slotText, mealSlot === slot && styles.slotTextActive]}>
                     {slot.charAt(0).toUpperCase() + slot.slice(1)}
                   </Text>
                 </TouchableOpacity>
               ))}
             </View>
 
+            {/* Add to Food Database */}
+            {!savedToDb ? (
+              <TouchableOpacity style={styles.dbBtn} onPress={handleAddToDatabase}>
+                <Ionicons name="library-outline" size={20} color={colors.primary} />
+                <Text style={styles.dbBtnText}>Save to My Food Database</Text>
+              </TouchableOpacity>
+            ) : (
+              <View style={styles.dbSavedBanner}>
+                <Ionicons name="checkmark-circle" size={20} color={colors.secondary} />
+                <Text style={styles.dbSavedText}>Saved to your food database!</Text>
+              </View>
+            )}
+
             {/* Add to Plan */}
             {!added ? (
-              <TouchableOpacity
-                style={styles.addBtn}
-                onPress={handleAddToPlan}
-              >
+              <TouchableOpacity style={styles.addBtn} onPress={handleAddToPlan}>
                 <Ionicons name="add-circle" size={22} color={colors.onPrimary} />
                 <Text style={styles.addBtnText}>
-                  Add to Today's{" "}
-                  {mealSlot === "lunch" ? "Lunch" : "Dinner"}
+                  Add to Today's {mealSlot.charAt(0).toUpperCase() + mealSlot.slice(1)}
                 </Text>
               </TouchableOpacity>
             ) : (
               <View style={styles.addedBanner}>
                 <Ionicons name="checkmark-circle" size={22} color={colors.secondary} />
                 <Text style={styles.addedText}>
-                  Added to {mealSlot === "lunch" ? "Lunch" : "Dinner"}!
+                  Added to {mealSlot.charAt(0).toUpperCase() + mealSlot.slice(1)}!
                 </Text>
               </View>
             )}
@@ -527,6 +528,39 @@ const styles = StyleSheet.create({
   },
   slotTextActive: {
     color: colors.onPrimary,
+  },
+  // Food database button
+  dbBtn: {
+    marginTop: 12,
+    borderWidth: 1.5,
+    borderColor: colors.primary,
+    borderRadius: radius.md,
+    paddingVertical: 13,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    backgroundColor: colors.surfaceContainerLowest,
+  },
+  dbBtnText: {
+    color: colors.primary,
+    fontSize: 15,
+    fontFamily: fonts.bodyBold,
+  },
+  dbSavedBanner: {
+    marginTop: 12,
+    backgroundColor: colors.secondaryContainer,
+    borderRadius: radius.md,
+    paddingVertical: 13,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+  dbSavedText: {
+    color: colors.secondary,
+    fontSize: 15,
+    fontFamily: fonts.bodySemiBold,
   },
   // Add button
   addBtn: {

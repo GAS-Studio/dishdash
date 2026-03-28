@@ -67,6 +67,10 @@ type MealStore = {
   setDinner: (recipe: Recipe | null) => void;
   clearPlan: () => void;
 
+  // User's saved food database (AI-recognized & manually added recipes)
+  customRecipes: Recipe[];
+  addCustomRecipe: (recipe: Recipe) => void;
+
   // Pantry filter (local UI state, not persisted)
   pantryIngredients: string[];
   togglePantryIngredient: (ingredient: string) => void;
@@ -88,6 +92,15 @@ export const useMealStore = create<MealStore>()(
       setLunch: (recipe) => set({ lunch: recipe }),
       setDinner: (recipe) => set({ dinner: recipe }),
       clearPlan: () => set({ breakfast: null, lunch: null, dinner: null }),
+
+      // Custom food database
+      customRecipes: [],
+      addCustomRecipe: (recipe) =>
+        set((state) => ({
+          customRecipes: state.customRecipes.some((r) => r.id === recipe.id)
+            ? state.customRecipes
+            : [...state.customRecipes, recipe],
+        })),
 
       // Pantry filter
       pantryIngredients: [],
@@ -123,6 +136,7 @@ export const useMealStore = create<MealStore>()(
         breakfast: state.breakfast,
         lunch: state.lunch,
         dinner: state.dinner,
+        customRecipes: state.customRecipes,
         feedbackHistory: state.feedbackHistory,
       }),
     }
