@@ -18,7 +18,8 @@ import { colors, fonts, radius } from '../../constants/theme';
 import recipesLunchDinner from '../../data/recipes_lunchdinner.json';
 import recipesBreakfast from '../../data/recipes_breakfast.json';
 
-const recipes: Recipe[] = [...(recipesLunchDinner as Recipe[]), ...(recipesBreakfast as Recipe[])];
+const allBreakfast: Recipe[] = recipesBreakfast as Recipe[];
+const allLunchDinner: Recipe[] = recipesLunchDinner as Recipe[];
 
 // Conditionally import deck swiper (doesn't work on web)
 let Swiper: any = null;
@@ -26,14 +27,31 @@ if (Platform.OS !== 'web') {
   Swiper = require('react-native-deck-swiper').default;
 }
 
+type MealFilter = 'breakfast' | 'lunch-dinner';
+
 export default function DiscoverScreen() {
   const swiperRef = useRef<any>(null);
   const router = useRouter();
-  const { breakfast, lunch, dinner, setBreakfast, setLunch, setDinner } = useMealStore();
+  const { breakfast, lunch, dinner, setBreakfast, setLunch, setDinner, customRecipes } = useMealStore();
+  const [mealFilter, setMealFilter] = useState<MealFilter>('lunch-dinner');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [allSwiped, setAllSwiped] = useState(false);
   const [showMealModal, setShowMealModal] = useState(false);
   const [pendingRecipe, setPendingRecipe] = useState<{ recipe: Recipe; index: number } | null>(null);
+
+  const customBreakfast = customRecipes.filter((r) => r.mealType === 'breakfast');
+  const customLunchDinner = customRecipes.filter((r) => r.mealType !== 'breakfast');
+
+  const recipes = mealFilter === 'breakfast'
+    ? [...allBreakfast, ...customBreakfast]
+    : [...allLunchDinner, ...customLunchDinner];
+
+  const handleFilterChange = (filter: MealFilter) => {
+    if (filter === mealFilter) return;
+    setMealFilter(filter);
+    setCurrentIndex(0);
+    setAllSwiped(false);
+  };
 
   const confirmMealSlot = (slot: 'Breakfast' | 'Lunch' | 'Dinner') => {
     if (!pendingRecipe) return;
@@ -76,6 +94,28 @@ export default function DiscoverScreen() {
 
       {/* ── Header ── */}
       <SharedHeader />
+
+      {/* ── Meal Filter Toggle ── */}
+      <View style={styles.filterRow}>
+        <TouchableOpacity
+          style={[styles.filterBtn, mealFilter === 'breakfast' && styles.filterBtnActive]}
+          onPress={() => handleFilterChange('breakfast')}
+          activeOpacity={0.8}
+        >
+          <Text style={[styles.filterBtnText, mealFilter === 'breakfast' && styles.filterBtnTextActive]}>
+            🌅 Breakfast
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.filterBtn, mealFilter === 'lunch-dinner' && styles.filterBtnActive]}
+          onPress={() => handleFilterChange('lunch-dinner')}
+          activeOpacity={0.8}
+        >
+          <Text style={[styles.filterBtnText, mealFilter === 'lunch-dinner' && styles.filterBtnTextActive]}>
+            ☀️ Lunch & Dinner
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       {/* ── Deck ── */}
       {allSwiped ? (
@@ -210,30 +250,35 @@ export default function DiscoverScreen() {
               When would you like to have {pendingRecipe?.recipe.name}?
             </Text>
             <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={[styles.modalBtn, styles.breakfastBtn]}
-                onPress={() => confirmMealSlot('Breakfast')}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.modalBtnEmoji}>🌅</Text>
-                <Text style={styles.modalBtnText}>Breakfast</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.modalBtn, styles.lunchBtn]}
-                onPress={() => confirmMealSlot('Lunch')}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.modalBtnEmoji}>☀️</Text>
-                <Text style={styles.modalBtnText}>Lunch</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.modalBtn, styles.dinnerBtn]}
-                onPress={() => confirmMealSlot('Dinner')}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.modalBtnEmoji}>🌙</Text>
-                <Text style={styles.modalBtnText}>Dinner</Text>
-              </TouchableOpacity>
+              {mealFilter === 'breakfast' ? (
+                <TouchableOpacity
+                  style={[styles.modalBtn, styles.breakfastBtn]}
+                  onPress={() => confirmMealSlot('Breakfast')}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.modalBtnEmoji}>🌅</Text>
+                  <Text style={styles.modalBtnText}>Breakfast</Text>
+                </TouchableOpacity>
+              ) : (
+                <>
+                  <TouchableOpacity
+                    style={[styles.modalBtn, styles.lunchBtn]}
+                    onPress={() => confirmMealSlot('Lunch')}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={styles.modalBtnEmoji}>☀️</Text>
+                    <Text style={styles.modalBtnText}>Lunch</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.modalBtn, styles.dinnerBtn]}
+                    onPress={() => confirmMealSlot('Dinner')}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={styles.modalBtnEmoji}>🌙</Text>
+                    <Text style={styles.modalBtnText}>Dinner</Text>
+                  </TouchableOpacity>
+                </>
+              )}
             </View>
             <TouchableOpacity
               style={styles.modalCancel}
@@ -256,6 +301,39 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: colors.background,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    marginHorizontal: 20,
+    marginTop: 10,
+    marginBottom: 4,
+    backgroundColor: colors.surfaceContainerLow,
+    borderRadius: radius.full,
+    padding: 4,
+    gap: 4,
+  },
+  filterBtn: {
+    flex: 1,
+    paddingVertical: 9,
+    borderRadius: radius.full,
+    alignItems: 'center',
+  },
+  filterBtnActive: {
+    backgroundColor: colors.surfaceContainerLowest,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  filterBtnText: {
+    fontSize: 13,
+    fontFamily: fonts.bodySemiBold,
+    color: colors.onSurfaceVariant,
+  },
+  filterBtnTextActive: {
+    color: colors.onSurface,
+    fontFamily: fonts.bodyBold,
   },
   deckArea: {
     flex: 1,
