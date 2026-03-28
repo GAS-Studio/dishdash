@@ -1,28 +1,38 @@
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Platform, Alert } from 'react-native';
-import { useMealStore, Recipe } from '../../store/useMealStore';
+import {
+  View, Text, ScrollView, StyleSheet, TouchableOpacity,
+  Platform, Alert, ActivityIndicator,
+} from 'react-native';
+import { useMealPlan } from '../../hooks/useMealPlan';
+import type { Recipe } from '../../store/useMealStore';
 import { colors, fonts, radius } from '../../constants/theme';
 import SharedHeader from '../../components/SharedHeader';
 
 export default function TodaysPlanScreen() {
-  const { breakfast, lunch, dinner, clearPlan } = useMealStore();
+  const { breakfast, lunch, dinner, loading, clearPlan } = useMealPlan();
 
   const handleClearPlan = () => {
     if (Platform.OS === 'web') {
-      const confirmed = window.confirm('Clear Plan?\n\nThis will remove all your meal selections.');
-      if (confirmed) clearPlan();
+      if (window.confirm('Clear Plan?\n\nThis will remove all your meal selections.')) clearPlan();
     } else {
-      Alert.alert(
-        'Clear Plan?',
-        'This will remove all your meal selections.',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'Clear', style: 'destructive', onPress: clearPlan },
-        ]
-      );
+      Alert.alert('Clear Plan?', 'This will remove all your meal selections.', [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Clear', style: 'destructive', onPress: clearPlan },
+      ]);
     }
   };
 
   const isEmpty = !breakfast && !lunch && !dinner;
+
+  if (loading) {
+    return (
+      <View style={styles.wrapper}>
+        <SharedHeader />
+        <View style={styles.centered}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.wrapper}>
@@ -30,23 +40,23 @@ export default function TodaysPlanScreen() {
       <ScrollView style={styles.container} contentContainerStyle={styles.content}>
         <Text style={styles.heading}>Today's Plan</Text>
 
-      {isEmpty ? (
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyIcon}>🍽️</Text>
-          <Text style={styles.emptyText}>No meals planned yet.</Text>
-          <Text style={styles.emptySubtext}>Swipe right on the deck to add meals here.</Text>
-        </View>
-      ) : (
-        <>
-          <MealCard label="Breakfast" recipe={breakfast} />
-          <MealCard label="Lunch" recipe={lunch} />
-          <MealCard label="Dinner" recipe={dinner} />
+        {isEmpty ? (
+          <View style={styles.emptyState}>
+            <Text style={styles.emptyIcon}>🍽️</Text>
+            <Text style={styles.emptyText}>No meals planned yet.</Text>
+            <Text style={styles.emptySubtext}>Swipe right on the deck to add meals here.</Text>
+          </View>
+        ) : (
+          <>
+            <MealCard label="Breakfast" recipe={breakfast} />
+            <MealCard label="Lunch"     recipe={lunch} />
+            <MealCard label="Dinner"    recipe={dinner} />
 
-          <TouchableOpacity style={styles.clearButton} onPress={handleClearPlan}>
-            <Text style={styles.clearButtonText}>Clear Plan</Text>
-          </TouchableOpacity>
-        </>
-      )}
+            <TouchableOpacity style={styles.clearButton} onPress={handleClearPlan}>
+              <Text style={styles.clearButtonText}>Clear Plan</Text>
+            </TouchableOpacity>
+          </>
+        )}
       </ScrollView>
     </View>
   );
@@ -66,26 +76,25 @@ function MealCard({ label, recipe }: { label: string; recipe: Recipe | null }) {
               </View>
             ))}
           </View>
-
           <View style={styles.metaRow}>
             <MetaPill icon="⏱" text={`${recipe.prepTime + recipe.cookTime} min`} />
             <MetaPill icon="👤" text={`${recipe.servings} servings`} />
             <MetaPill icon="📊" text={recipe.difficulty} />
           </View>
-
           <View style={styles.macrosRow}>
-            <MacroItem label="Cal" value={recipe.macros.calories} />
+            <MacroItem label="Cal"     value={recipe.macros.calories} />
             <MacroItem label="Protein" value={`${recipe.macros.protein}g`} />
-            <MacroItem label="Carbs" value={`${recipe.macros.carbs}g`} />
-            <MacroItem label="Fats" value={`${recipe.macros.fats}g`} />
+            <MacroItem label="Carbs"   value={`${recipe.macros.carbs}g`} />
+            <MacroItem label="Fats"    value={`${recipe.macros.fats}g`} />
           </View>
-
           {recipe.description && (
             <Text style={styles.description}>{recipe.description}</Text>
           )}
         </>
       ) : (
-        <Text style={styles.emptyCardText}>Not set — swipe right to pick a {label.toLowerCase()}.</Text>
+        <Text style={styles.emptyCardText}>
+          Not set — swipe right to pick a {label.toLowerCase()}.
+        </Text>
       )}
     </View>
   );
@@ -111,13 +120,9 @@ function MacroItem({ label, value }: { label: string; value: string | number }) 
 const TAB_BAR_HEIGHT = Platform.OS === 'ios' ? 82 : 72;
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  container: {
-    flex: 1,
-  },
+  wrapper:   { flex: 1, backgroundColor: colors.background },
+  container: { flex: 1 },
+  centered:  { flex: 1, alignItems: 'center', justifyContent: 'center' },
   content: {
     padding: 20,
     paddingTop: 16,
@@ -129,14 +134,8 @@ const styles = StyleSheet.create({
     color: colors.primary,
     marginBottom: 24,
   },
-  emptyState: {
-    alignItems: 'center',
-    marginTop: 80,
-  },
-  emptyIcon: {
-    fontSize: 56,
-    marginBottom: 16,
-  },
+  emptyState: { alignItems: 'center', marginTop: 80 },
+  emptyIcon:  { fontSize: 56, marginBottom: 16 },
   emptyText: {
     fontSize: 18,
     fontFamily: fonts.bodySemiBold,
@@ -191,11 +190,7 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bodyMedium,
     color: colors.primary,
   },
-  metaRow: {
-    flexDirection: 'row',
-    gap: 8,
-    marginBottom: 14,
-  },
+  metaRow: { flexDirection: 'row', gap: 8, marginBottom: 14 },
   pill: {
     backgroundColor: colors.surfaceContainer,
     borderRadius: 20,
@@ -215,9 +210,7 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 12,
   },
-  macroItem: {
-    alignItems: 'center',
-  },
+  macroItem:  { alignItems: 'center' },
   macroValue: {
     fontSize: 16,
     fontFamily: fonts.bodyBold,

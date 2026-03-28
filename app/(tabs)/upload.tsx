@@ -14,7 +14,9 @@ import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { recognizeDish, type DishResult } from "../../lib/recognizeDish";
-import { useMealStore, type Recipe } from "../../store/useMealStore";
+import { type Recipe } from "../../store/useMealStore";
+import { useMealPlan } from "../../hooks/useMealPlan";
+import { useUserRecipes } from "../../hooks/useUserRecipes";
 import SharedHeader from "../../components/SharedHeader";
 import { colors, fonts, radius } from "../../constants/theme";
 
@@ -31,7 +33,8 @@ export default function UploadScreen() {
   const [mealSlot, setMealSlot] = useState<"breakfast" | "lunch" | "dinner">(
     new Date().getHours() < 11 ? "breakfast" : new Date().getHours() < 15 ? "lunch" : "dinner"
   );
-  const { setBreakfast, setLunch, setDinner, addCustomRecipe } = useMealStore();
+  const { setBreakfast, setLunch, setDinner } = useMealPlan();
+  const { addCustomRecipe } = useUserRecipes();
 
   const pickImage = async (useCamera: boolean) => {
     setResult(null);

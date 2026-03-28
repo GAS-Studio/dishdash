@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,17 +9,16 @@ import {
   Platform,
   ScrollView,
   Modal,
+  ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useMealStore, Recipe } from '../../store/useMealStore';
+import { Recipe } from '../../store/useMealStore';
 import RecipeCard from '../../components/RecipeCard';
 import SharedHeader from '../../components/SharedHeader';
 import { colors, fonts, radius } from '../../constants/theme';
-import recipesLunchDinner from '../../data/recipes_lunchdinner.json';
-import recipesBreakfast from '../../data/recipes_breakfast.json';
-
-const allBreakfast: Recipe[] = recipesBreakfast as Recipe[];
-const allLunchDinner: Recipe[] = recipesLunchDinner as Recipe[];
+import { fetchRecipes } from '../../lib/db';
+import { useMealPlan } from '../../hooks/useMealPlan';
+import { useUserRecipes } from '../../hooks/useUserRecipes';
 
 // Conditionally import deck swiper (doesn't work on web)
 let Swiper: any = null;
@@ -32,18 +31,34 @@ type MealFilter = 'breakfast' | 'lunch-dinner';
 export default function DiscoverScreen() {
   const swiperRef = useRef<any>(null);
   const router = useRouter();
-  const { breakfast, lunch, dinner, setBreakfast, setLunch, setDinner, customRecipes } = useMealStore();
+  const { setBreakfast, setLunch, setDinner } = useMealPlan();
+  const { customRecipes } = useUserRecipes();
+
+  const [allBreakfast, setAllBreakfast] = useState<Recipe[]>([]);
+  const [allLunchDinner, setAllLunchDinner] = useState<Recipe[]>([]);
+  const [recipesLoading, setRecipesLoading] = useState(true);
+
+  useEffect(() => {
+    fetchRecipes()
+      .then((all) => {
+        setAllBreakfast(all.filter((r) => r.mealType === 'breakfast'));
+        setAllLunchDinner(all.filter((r) => r.mealType !== 'breakfast'));
+      })
+      .catch(console.error)
+      .finally(() => setRecipesLoading(false));
+  }, []);
+
   const [mealFilter, setMealFilter] = useState<MealFilter>('lunch-dinner');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [allSwiped, setAllSwiped] = useState(false);
   const [showMealModal, setShowMealModal] = useState(false);
   const [pendingRecipe, setPendingRecipe] = useState<{ recipe: Recipe; index: number } | null>(null);
 
-  const customBreakfast = customRecipes.filter((r) => r.mealType === 'breakfast');
+  const customBreakfast   = customRecipes.filter((r) => r.mealType === 'breakfast');
   const customLunchDinner = customRecipes.filter((r) => r.mealType !== 'breakfast');
 
   const recipes = mealFilter === 'breakfast'
-    ? [...allBreakfast, ...customBreakfast]
+    ? [...allBreakfast,   ...customBreakfast]
     : [...allLunchDinner, ...customLunchDinner];
 
   const handleFilterChange = (filter: MealFilter) => {
@@ -57,13 +72,9 @@ export default function DiscoverScreen() {
     if (!pendingRecipe) return;
     const { recipe, index } = pendingRecipe;
 
-    if (slot === 'Breakfast') {
-      setBreakfast(recipe);
-    } else if (slot === 'Lunch') {
-      setLunch(recipe);
-    } else {
-      setDinner(recipe);
-    }
+    if (slot === 'Breakfast')      setBreakfast(recipe);
+    else if (slot === 'Lunch')     setLunch(recipe);
+    else                           setDinner(recipe);
 
     if (Platform.OS === 'web') {
       setCurrentIndex(index + 1);
@@ -94,6 +105,13 @@ export default function DiscoverScreen() {
 
       {/* ── Header ── */}
       <SharedHeader />
+
+      {/* ── Loading ── */}
+      {recipesLoading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      )}
 
       {/* ── Meal Filter Toggle ── */}
       <View style={styles.filterRow}>
@@ -300,6 +318,14 @@ export default function DiscoverScreen() {
 const styles = StyleSheet.create({
   safe: {
     flex: 1,
+    backgroundColor: colors.background,
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10,
     backgroundColor: colors.background,
   },
   filterRow: {

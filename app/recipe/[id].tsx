@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,26 +8,41 @@ import {
   StyleSheet,
   SafeAreaView,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { Recipe, useMealStore } from '../../store/useMealStore';
+import { Recipe } from '../../store/useMealStore';
+import { fetchRecipeById } from '../../lib/db';
+import { useMealPlan } from '../../hooks/useMealPlan';
 import recipeImages from '../../constants/images';
 import { colors, fonts, radius, spacing } from '../../constants/theme';
-import lunchDinnerData from '../../data/recipes_lunchdinner.json';
-import breakfastData from '../../data/recipes_breakfast.json';
-
-const ALL_RECIPES = [...(lunchDinnerData as Recipe[]), ...(breakfastData as Recipe[])];
 
 export default function RecipeDetailScreen() {
   const { id, slot } = useLocalSearchParams<{ id: string; slot?: string }>();
   const router = useRouter();
-  const { setBreakfast, setLunch, setDinner } = useMealStore();
+  const { setBreakfast, setLunch, setDinner } = useMealPlan();
 
-  const recipe = useMemo(
-    () => ALL_RECIPES.find((r) => r.id === id) ?? null,
-    [id]
-  );
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+    fetchRecipeById(id)
+      .then(setRecipe)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [id]);
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.safe}>
+        <View style={styles.centered}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   if (!recipe) {
     return (
@@ -177,6 +192,11 @@ const styles = StyleSheet.create({
   },
   scroll: { flex: 1 },
   scrollContent: { paddingBottom: 0 },
+  centered: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   notFound: {
     textAlign: 'center',
     marginTop: 100,
