@@ -41,8 +41,9 @@ export default function DiscoverScreen() {
   useEffect(() => {
     fetchRecipes()
       .then((all) => {
-        setAllBreakfast(all.filter((r) => r.mealType === 'breakfast'));
-        setAllLunchDinner(all.filter((r) => r.mealType !== 'breakfast'));
+        const shuffle = <T,>(arr: T[]) => [...arr].sort(() => Math.random() - 0.5);
+        setAllBreakfast(shuffle(all.filter((r) => r.mealType === 'breakfast')));
+        setAllLunchDinner(shuffle(all.filter((r) => r.mealType !== 'breakfast')));
       })
       .catch(console.error)
       .finally(() => setRecipesLoading(false));

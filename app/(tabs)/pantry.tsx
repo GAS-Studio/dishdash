@@ -3,7 +3,9 @@ import {
 } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
-import { useMealStore, Recipe } from '../../store/useMealStore';
+import { useMealStore } from '../../store/useMealStore';
+import { Recipe } from '../../store/useMealStore';
+import { useMealPlan } from '../../hooks/useMealPlan';
 import { INGREDIENT_CATEGORIES } from '../../constants/ingredientCategories';
 import { colors, fonts } from '../../constants/theme';
 import SharedHeader from '../../components/SharedHeader';
@@ -120,11 +122,16 @@ function RecipeResultCard({
   total: number;
 }) {
   const router = useRouter();
-  const { setLunch, setDinner, lunch, dinner } = useMealStore();
-  const addedAs = lunch?.id === recipe.id ? 'lunch' : dinner?.id === recipe.id ? 'dinner' : null;
+  const { setBreakfast, setLunch, setDinner, breakfast, lunch, dinner } = useMealPlan();
+  const isBreakfast = recipe.mealType === 'breakfast';
+  const addedAs = breakfast?.id === recipe.id ? 'breakfast'
+    : lunch?.id === recipe.id ? 'lunch'
+    : dinner?.id === recipe.id ? 'dinner'
+    : null;
 
-  const handleAdd = (slot: 'lunch' | 'dinner') => {
-    if (slot === 'lunch') setLunch(recipe);
+  const handleAdd = (slot: 'breakfast' | 'lunch' | 'dinner') => {
+    if (slot === 'breakfast') setBreakfast(recipe);
+    else if (slot === 'lunch') setLunch(recipe);
     else setDinner(recipe);
     router.push('/(tabs)/plan');
   };
@@ -150,6 +157,10 @@ function RecipeResultCard({
 
       {addedAs ? (
         <Text style={styles.addedLabel}>✓ Added as {addedAs}</Text>
+      ) : isBreakfast ? (
+        <TouchableOpacity style={styles.addBtn} onPress={() => handleAdd('breakfast')}>
+          <Text style={styles.addBtnText}>+ Breakfast</Text>
+        </TouchableOpacity>
       ) : (
         <View style={styles.addButtons}>
           <TouchableOpacity style={styles.addBtn} onPress={() => handleAdd('lunch')}>
