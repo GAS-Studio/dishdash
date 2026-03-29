@@ -4,6 +4,8 @@
 
 DishDash is a mobile-first recipe discovery and meal planning app with an Inshorts-style swipe interface. Built during a vibe-coding sprint, it helps users discover recipes through an intuitive swipe deck, find meals based on what's in their pantry, identify dishes using AI-powered photo recognition, and plan daily meals — all wrapped in a warm, modern gourmet design system.
 
+Try it here: https://dishdash-seven.vercel.app/landing
+
 ---
 
 ## Table of Contents
